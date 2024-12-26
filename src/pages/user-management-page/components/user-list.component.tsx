@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
     Table,
     TableBody,
@@ -40,49 +40,16 @@ const UserListComponent: FC<UserListComponentProps> = ({
     handleChangeRowsPerPage,
     handleReloadUserData,
 }) => {
-    const { handleRemoveUser } = useUserData();
-
-    // Dialog states
-    const [openRemoveUserDialog, setOpenRemoveUserDialog] = useState(false);
-    const [openUpdateUserDialog, setOpenUpdateUserDialog] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<string | null>(null);
-    const [isDeleting, setIsDeleting] = useState(false);
-
-    // Handle open/close for Remove dialog
-    const handleOpenRemoveUserDialog = (userId: string) => {
-        setSelectedUser(userId);
-        setOpenRemoveUserDialog(true);
-    };
-
-    const handleCloseRemoveUserDialog = () => {
-        setOpenRemoveUserDialog(false);
-        setSelectedUser(null);
-    };
-
-    const handleOpenUpdateUserDialog = (userId: string) => {
-        setSelectedUser(userId);
-        setOpenUpdateUserDialog(true);
-    };
-
-    const handleCloseUpdateUserDialog = () => {
-        setOpenUpdateUserDialog(false);
-        setSelectedUser(null);
-    };
-
-    const handleApproveRemoveUser = async () => {
-        if (!selectedUser) return;
-
-        setIsDeleting(true);
-        try {
-            await handleRemoveUser(selectedUser);
-            handleReloadUserData();
-        } catch (error) {
-            console.error('Error removing user:', error);
-        } finally {
-            setIsDeleting(false);
-            handleCloseRemoveUserDialog();
-        }
-    };
+    const {
+        openRemoveUserDialog,
+        openUpdateUserDialog,
+        handleOpenRemoveUserDialog,
+        handleCloseRemoveUserDialog,
+        handleApproveRemoveUser,
+        handleOpenUpdateUserDialog,
+        handleCloseUpdateUserDialog,
+        selectedUser,
+    } = useUserData();
 
     return (
         <>
@@ -112,7 +79,9 @@ const UserListComponent: FC<UserListComponentProps> = ({
                                     <StyledTableCell>{user.username}</StyledTableCell>
                                     <StyledTableCell>{user.email}</StyledTableCell>
                                     <StyledTableCell>
-                                        <IconButton onClick={() => handleOpenUpdateUserDialog(user._id)}>
+                                        <IconButton
+                                            onClick={() => handleOpenUpdateUserDialog(user._id)}
+                                        >
                                             <EditIcon color="primary" />
                                         </IconButton>
                                         <IconButton onClick={() => handleOpenRemoveUserDialog(user._id)}>
@@ -147,15 +116,15 @@ const UserListComponent: FC<UserListComponentProps> = ({
                 isOpen={openRemoveUserDialog}
                 onClose={handleCloseRemoveUserDialog}
                 onApprove={handleApproveRemoveUser}
-                isLoading={isDeleting}
+                isLoading={isLoading}
             />
 
             {/* Update User Dialog */}
             <UpdateUserDialogComponent
                 isOpen={openUpdateUserDialog}
                 onClose={handleCloseUpdateUserDialog}
-                handleReloadUserData={handleReloadUserData}
                 userId={selectedUser || ''}
+                handleReloadUserData={handleReloadUserData}
             />
         </>
     );

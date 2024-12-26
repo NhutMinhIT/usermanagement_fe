@@ -20,8 +20,8 @@ import { useForm } from "../../../hooks/useForm";
 type UpdateUserDialogComponentProps = {
     isOpen: boolean;
     onClose: () => void;
-    handleReloadUserData: () => void;
     userId: string | null;
+    handleReloadUserData: () => void;
 };
 
 const initialFormData: IUpdateUser = {
@@ -34,11 +34,11 @@ const initialFormData: IUpdateUser = {
 const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
     isOpen,
     onClose,
-    handleReloadUserData,
     userId,
+    handleReloadUserData
 }) => {
     const { handleUpdateUser, getUserDetails } = useUserData();
-    const [loadingData, setLoadingLoading] = useState<boolean>(false);
+    const [loadingData, setLoadingData] = useState<boolean>(false);
     const {
         isLoading,
         errors,
@@ -55,7 +55,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
         if (!userId) return;
 
         const fetchUserDetail = async () => {
-            setLoadingLoading(true);
+            setLoadingData(true);
             try {
                 const userData = await getUserDetails(userId);
                 setFormData({
@@ -67,7 +67,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
             } catch (error) {
                 console.error("Error fetching user:", error);
             } finally {
-                setLoadingLoading(false);
+                setLoadingData(false);
             }
         };
         fetchUserDetail();
@@ -95,7 +95,6 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
             }
         });
     };
-
 
     return (
         <Dialog open={isOpen} onClose={onClose} maxWidth="sm" fullWidth>
@@ -136,7 +135,12 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         helperText={touched.email && errors.email}
                     />
                     <FormControl fullWidth margin="dense">
-                        <InputLabel id="role-label">Select Role</InputLabel>
+                        <InputLabel
+                            id="role-label"
+                            disabled
+                        >
+                            elect Role
+                        </InputLabel>
                         <Select
                             labelId="role-label"
                             label="Select Role"

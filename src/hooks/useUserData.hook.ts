@@ -14,7 +14,13 @@ export const useUserData = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(20);
     const [search, setSearch] = useState<string>("");
+    const [selectedUser, setSelectedUser] = useState<string | null>(null);
     const [isCreateUserDialog, setIsCreateUserDialog] = useState<boolean>(false);
+
+    // dialog remove user
+    const [openRemoveUserDialog, setOpenRemoveUserDialog] = useState(false);
+    // dialog update user
+    const [openUpdateUserDialog, setOpenUpdateUserDialog] = useState(false);
 
     const fetchUserData = useCallback(async ({ page, limit, search }: GetAllUsersParamsType) => {
         setIsLoading(true);
@@ -22,13 +28,12 @@ export const useUserData = () => {
             const response = await getAllUsers({ page, limit, search });
             setData(response.data);
             setTotal(response.total);
-        } catch (error) {
-            console.error('Error fetching user data:', error);
+        } catch (err) {
+            console.error("Error fetching user data:", err);
         } finally {
             setIsLoading(false);
         }
     }, [getAllUsers]);
-
 
     const getUserDetails = async (userId: string) => {
         setIsLoading(true);
@@ -103,25 +108,60 @@ export const useUserData = () => {
         setPage(1);
         fetchUserData({ page: 1, limit: newLimit, search });
     };
-
-    const handleOpenUserDialog = () => setIsCreateUserDialog(true);
-    const handleCloseAddUserDialog = () => setIsCreateUserDialog(false);
     const handleReloadUserData = () => fetchUserData({ page, limit, search });
 
-    useEffect(() => {
-        fetchUserData({ page, limit, search });
-    }, []);
+    // action create user
+    const handleOpenUserDialog = () => setIsCreateUserDialog(true);
+    const handleCloseAddUserDialog = () => setIsCreateUserDialog(false);
+
+    //action remove user
+    const handleOpenRemoveUserDialog = (userId: string) => {
+        setSelectedUser(userId);
+        setOpenRemoveUserDialog(true);
+    }
+    const handleCloseRemoveUserDialog = () => {
+        setOpenRemoveUserDialog(false);
+        setSelectedUser(null);
+    }
+    const handleApproveRemoveUser = async () => {
+        if (!selectedUser) return;
+
+        setIsLoading(true);
+        try {
+            await handleRemoveUser(selectedUser)
+            window.alert('User removed successfully');
+            fetchUserData({ page, limit, search });
+        } catch (error) {
+            console.error('Error removing user:', error);
+        } finally {
+            setIsLoading(false);
+            handleCloseRemoveUserDialog();
+        }
+    };
+
+    //action update user
+    const handleOpenUpdateUserDialog = (userId: string) => {
+        setSelectedUser(userId);
+        setOpenUpdateUserDialog(true);
+    }
+    const handleCloseUpdateUserDialog = () => {
+        setOpenUpdateUserDialog(false);
+        setSelectedUser(null);
+    }
 
 
     return {
         data,
         total,
+        selectedUser,
         fetchUserData,
         isLoading,
         page,
         limit,
         search,
         isCreateUserDialog,
+        openRemoveUserDialog,
+        openUpdateUserDialog,
         handleCreateUser,
         handleUpdateUser,
         handleRemoveUser,
@@ -131,6 +171,11 @@ export const useUserData = () => {
         handleChangeRowsPerPage,
         handleOpenUserDialog,
         handleCloseAddUserDialog,
+        handleOpenRemoveUserDialog,
+        handleCloseRemoveUserDialog,
+        handleApproveRemoveUser,
+        handleOpenUpdateUserDialog,
+        handleCloseUpdateUserDialog,
         handleReloadUserData
     };
 };

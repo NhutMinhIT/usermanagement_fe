@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Stack, Button } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import UserListComponent from "./components/user-list.component";
@@ -14,6 +14,8 @@ const UserManagementPage = () => {
         isLoading,
         page,
         limit,
+        search,
+        fetchUserData,
         isCreateUserDialog,
         handleSearchChange,
         handleChangePage,
@@ -22,6 +24,10 @@ const UserManagementPage = () => {
         handleCloseAddUserDialog,
         handleReloadUserData
     } = useUserData();
+
+    useEffect(() => {
+        fetchUserData({ page, limit, search: '' });
+    }, [page, limit]);
 
     return (
         <Stack spacing={2} className={styles.usermanagement__page}>
@@ -49,9 +55,9 @@ const UserManagementPage = () => {
                 limit={limit}
                 total={total}
                 isLoading={isLoading}
+                handleReloadUserData={handleReloadUserData}
                 handleChangePage={handleChangePage}
                 handleChangeRowsPerPage={handleChangeRowsPerPage}
-                handleReloadUserData={handleReloadUserData}
             />
 
             <CreateUserDialog

@@ -4,7 +4,7 @@ import { getAuthHeaders } from "../../../utils/getAuthHeaders";
 import { GetAllUsersParamsType, ICreateUser, IUpdateUser } from "../types/user-managment.type";
 
 
-export const getAllUsers = async ({ page = 1, limit = 10, search = "" }: GetAllUsersParamsType) => {
+export const getAllUsers = async ({ page = 1, limit = 5, search = "" }: GetAllUsersParamsType) => {
     try {
         const params = new URLSearchParams({
             page: page.toString(),
