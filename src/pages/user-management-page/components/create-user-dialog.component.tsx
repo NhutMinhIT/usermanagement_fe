@@ -23,7 +23,6 @@ type CreateUserDialogProps = {
     handleReloadUserData: () => void;
 }
 
-
 const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleReloadUserData }) => {
     const { handleCreateUser } = useUserData();
     const {
@@ -68,7 +67,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         fullWidth
                         name="username"
                         label="Username"
-                        value={formData.username}
+                        value={formData.username.trim()}
                         onChange={handleChange}
                         onBlur={() => handleBlur('username')}
                         error={touched.username && Boolean(errors.username)}
@@ -88,7 +87,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         fullWidth
                         name="email"
                         label="Email"
-                        value={formData.email}
+                        value={formData.email.trim()}
                         onChange={handleChange}
                         onBlur={() => handleBlur('email')}
                         error={touched.email && Boolean(errors.email)}
