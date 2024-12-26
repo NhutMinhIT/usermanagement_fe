@@ -107,7 +107,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         margin="dense"
                         name="username"
                         label="Username"
-                        value={formData.username}
+                        value={formData.username?.trim()}
                         onChange={handleChange}
                         onBlur={() => handleBlur('username')}
                         error={touched.username && Boolean(errors.username)}
@@ -129,7 +129,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         margin="dense"
                         name="email"
                         label="Email"
-                        value={formData.email}
+                        value={formData.email?.trim()}
                         onChange={handleChange}
                         onBlur={() => handleBlur('email')}
                         error={touched.email && Boolean(errors.email)}
