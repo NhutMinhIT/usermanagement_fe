@@ -1,71 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Stack, Button } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-
 import UserListComponent from "./components/user-list.component";
 import CreateUserDialog from "./components/create-user-dialog.component";
-
 import styles from "./components/module/style.module.css";
-
-import { useUserData } from "../../hooks/useUserData.hook";
-import { useSearch } from "../../hooks/useSearch.hook";
-import { SearchParams } from "./types/search.type";
 import { SearchInput } from "../../components/Search/SearchInput";
+import { useUserData } from "../../hooks/useUserData.hook";
 
 const UserManagementPage = () => {
-    // Use custom hook for managing user data
-    const { data, total, fetchUserData, isLoading } = useUserData();
-
-    // Pagination and search state
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(20);
-    const [search, setSearch] = useState<string>("");
-
-    // Dialog state
-    const [isUserDialogOpen, setIsUserDialogOpen] = useState<boolean>(false);
-
-    const { handleSearchChange } = useSearch<SearchParams>({
-        onSearch: fetchUserData,
-        searchParams: { page: 1, limit: 10 },
-        delay: 500
-    });
-
-    // Handle page change
-    const handleChangePage = (
-        _event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number
-    ) => {
-        setPage(newPage + 1);
-        fetchUserData({ page: newPage + 1, limit, search });
-    };
-
-    // Handle rows per page change
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-    ) => {
-        const newLimit = parseInt(event.target.value, 10);
-        setLimit(newLimit || 20);
-        setPage(1);
-        fetchUserData({ page: 1, limit: newLimit, search });
-    };
-
-    // Open and close the Create User dialog
-    const handleOpenUserDialog = () => {
-        setIsUserDialogOpen(true);
-    };
-
-    const handleCloseAddUserDialog = () => {
-        setIsUserDialogOpen(false);
-    };
-
-    useEffect(() => {
-        fetchUserData({ page, limit, search });
-    }, []);
-
-    // Reload data after user actions (e.g., add, update, delete)
-    const handleReloadUserData = () => {
-        fetchUserData({ page, limit, search });
-    };
+    const {
+        data,
+        total,
+        isLoading,
+        page,
+        limit,
+        isCreateUserDialog,
+        handleSearchChange,
+        handleChangePage,
+        handleChangeRowsPerPage,
+        handleOpenUserDialog,
+        handleCloseAddUserDialog,
+        handleReloadUserData
+    } = useUserData();
 
     return (
         <Stack spacing={2} className={styles.usermanagement__page}>
@@ -76,7 +32,6 @@ const UserManagementPage = () => {
                         placeholder="Search...."
                     />
                 </div>
-
                 <Button
                     className="btn__add-user"
                     variant="outlined"
@@ -100,7 +55,7 @@ const UserManagementPage = () => {
             />
 
             <CreateUserDialog
-                isOpen={isUserDialogOpen}
+                isOpen={isCreateUserDialog}
                 onClose={handleCloseAddUserDialog}
                 handleReloadUserData={handleReloadUserData}
             />

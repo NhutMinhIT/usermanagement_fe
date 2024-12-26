@@ -35,7 +35,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
         handleBlur,
         handleSubmit,
         setFormData
-    } = useForm<ICreateUser>(initialFormData, validateUserForm);
+    } = useForm(initialFormData, validateUserForm);
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -44,7 +44,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                 await handleCreateUser(data);
                 onClose();
                 setFormData(initialFormData);
-                handleReloadUserData(); // Call reload after successful creation
+                handleReloadUserData();
             } catch (error) {
                 console.error('Error creating user:', error);
                 window.alert('Failed to create user. Please try again.');
