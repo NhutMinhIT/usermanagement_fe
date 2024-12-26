@@ -23,7 +23,6 @@ const ConfirmDialog: FC<ConfirmDialog> = ({
             onClose={onClose}
             TransitionComponent={Transition}
             fullWidth
-        // className={styles.remove__user__dialog}
         >
             <DialogTitle>{title}</DialogTitle>
             <DialogContent>
