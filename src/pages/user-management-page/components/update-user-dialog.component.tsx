@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { FC, useEffect, useState } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -10,105 +10,97 @@ import {
     FormControl,
     InputLabel,
     Select,
-    SelectChangeEvent,
 } from "@mui/material";
 import { IUpdateUser } from "../types/user-managment.type";
 import { ROLE_OPTIONS } from "../../../constants/role.constant";
 import { validateUpdateUser } from "../schemas/update-user-schema";
-import { useUserManagementContext } from "../context/user-management.context";
+import { useUserData } from "../../../hooks/useUserData.hook";
+import { useForm } from "../../../hooks/useForm";
 
 type UpdateUserDialogComponentProps = {
     isOpen: boolean;
     onClose: () => void;
-    // handleReloadUserData: () => void;
+    handleReloadUserData: () => void;
     userId: string | null;
+};
+
+const initialFormData: IUpdateUser = {
+    username: "",
+    fullName: "",
+    email: "",
+    role: "",
 };
 
 const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
     isOpen,
     onClose,
-    // handleReloadUserData,
+    handleReloadUserData,
     userId,
 }) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const { getUserById, updateUser } = useUserManagementContext();
-    const [formData, setFormData] = useState<IUpdateUser>({
-        username: "",
-        fullName: "",
-        email: "",
-        role: "",
-    });
-    const [errors, setErrors] = useState<Record<string, string>>({});
-    const [touched, setTouched] = useState<Record<string, boolean>>({});
-
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSelectChange = (e: SelectChangeEvent) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleBlur = (field: string) => {
-        setTouched(prev => ({ ...prev, [field]: true }));
-        const validationErrors = validateUpdateUser(formData);
-        setErrors(validationErrors);
-    };
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!userId) return;
-
-        const validationErrors = validateUpdateUser(formData);
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-
-        try {
-            setIsLoading(true);
-            await updateUser(userId, formData);
-            window.alert("User updated successfully");
-            // handleReloadUserData();
-            onClose();
-            setFormData({ username: "", fullName: "", email: "", role: "" });
-        } catch (error: any) {
-            const backendError = error.response?.data?.message;
-            window.alert(backendError || error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    const { handleUpdateUser, getUserDetails } = useUserData();
+    const [loadingData, setLoadingLoading] = useState<boolean>(false);
+    const {
+        isLoading,
+        errors,
+        touched,
+        formData,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        handleSelectChange,
+        setFormData,
+    } = useForm<IUpdateUser>(initialFormData, validateUpdateUser);
 
     useEffect(() => {
         if (!userId) return;
 
-        const fetchUser = async () => {
+        const fetchUserDetail = async () => {
+            setLoadingLoading(true);
             try {
-                setIsLoading(true);
-                const fetchedUser = await getUserById(userId);
+                const userData = await getUserDetails(userId);
                 setFormData({
-                    username: fetchedUser.username || "",
-                    fullName: fetchedUser.fullName || "",
-                    email: fetchedUser.email || "",
-                    role: fetchedUser.role || "",
+                    username: userData.username || "",
+                    fullName: userData.fullName || "",
+                    email: userData.email || "",
+                    role: userData.role || "",
                 });
-            } catch (error: any) {
-                console.error("Failed to fetch user:", error);
+            } catch (error) {
+                console.error("Error fetching user:", error);
             } finally {
-                setIsLoading(false);
+                setLoadingLoading(false);
             }
         };
+        fetchUserDetail();
+    }, [userId]);
 
-        fetchUser();
-    }, [userId, getUserById]);
+    if (loadingData) {
+        return (
+            <Dialog open={isOpen} onClose={onClose}>
+                <DialogTitle>Loading...</DialogTitle>
+            </Dialog>
+        );
+    }
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        await handleSubmit(async (data) => {
+            if (!userId) return;
+            try {
+                await handleUpdateUser(userId, data);
+                onClose();
+                handleReloadUserData();
+            } catch (error) {
+                console.error("Error updating user:", error);
+                window.alert("Failed to update user. Please try again.");
+            }
+        });
+    };
+
 
     return (
         <Dialog open={isOpen} onClose={onClose} maxWidth="sm" fullWidth>
             <DialogTitle>Update User</DialogTitle>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
                 <DialogContent>
                     <TextField
                         fullWidth
@@ -116,7 +108,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         name="username"
                         label="Username"
                         value={formData.username}
-                        onChange={handleInputChange}
+                        onChange={handleChange}
                         onBlur={() => handleBlur('username')}
                         error={touched.username && Boolean(errors.username)}
                         helperText={touched.username && errors.username}
@@ -127,7 +119,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         name="fullName"
                         label="Full Name"
                         value={formData.fullName}
-                        onChange={handleInputChange}
+                        onChange={handleChange}
                         onBlur={() => handleBlur('fullName')}
                         error={touched.fullName && Boolean(errors.fullName)}
                         helperText={touched.fullName && errors.fullName}
@@ -138,19 +130,19 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         name="email"
                         label="Email"
                         value={formData.email}
-                        onChange={handleInputChange}
+                        onChange={handleChange}
                         onBlur={() => handleBlur('email')}
                         error={touched.email && Boolean(errors.email)}
                         helperText={touched.email && errors.email}
                     />
-                    <FormControl fullWidth required>
+                    <FormControl fullWidth margin="dense">
                         <InputLabel id="role-label">Select Role</InputLabel>
                         <Select
                             labelId="role-label"
                             label="Select Role"
                             name="role"
                             value={formData.role}
-                            onChange={handleSelectChange}
+                            onChange={(e) => handleSelectChange('role', e.target.value)}
                             onBlur={() => handleBlur('role')}
                             error={touched.role && Boolean(errors.role)}
                         >
