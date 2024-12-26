@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { ICreateUser } from "../types/user-managment.type";
 
 
