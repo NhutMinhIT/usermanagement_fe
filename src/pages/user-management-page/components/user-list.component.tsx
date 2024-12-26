@@ -28,6 +28,7 @@ type UserListComponentProps = {
     isLoading: boolean;
     handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => void;
     handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    handleReloadUserData: () => void;
 };
 
 const UserListComponent: FC<UserListComponentProps> = ({
@@ -38,6 +39,7 @@ const UserListComponent: FC<UserListComponentProps> = ({
     isLoading,
     handleChangePage,
     handleChangeRowsPerPage,
+    handleReloadUserData,
 }) => {
     const { handleRemoveUser } = useUserData();
 
@@ -74,6 +76,7 @@ const UserListComponent: FC<UserListComponentProps> = ({
         setIsDeleting(true);
         try {
             await handleRemoveUser(selectedUser);
+            handleReloadUserData();
         } catch (error) {
             console.error('Error removing user:', error);
         } finally {

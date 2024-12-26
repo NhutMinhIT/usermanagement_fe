@@ -105,7 +105,7 @@ const UserManagementPage = () => {
                 isLoading={isLoading}
                 handleChangePage={handleChangePage}
                 handleChangeRowsPerPage={handleChangeRowsPerPage}
-            // handleReloadUserData={handleReloadUserData}
+                handleReloadUserData={handleReloadUserData}
             />
 
             <CreateUserDialog
