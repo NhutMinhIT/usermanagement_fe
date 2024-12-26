@@ -2,7 +2,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/
 import Transition from "../../pages/user-management-page/components/module/dialog-transition"
 import { FC } from "react";
 import ButtonLoading from "../Button/Button";
-type ConfirmDialog = {
+
+type ConfirmDialogProps = {
     title: string;
     isOpen: boolean;
     onClose: () => void;
@@ -10,7 +11,7 @@ type ConfirmDialog = {
     isLoading: boolean;
 }
 
-const ConfirmDialog: FC<ConfirmDialog> = ({
+const ConfirmDialog: FC<ConfirmDialogProps> = ({
     title,
     isOpen,
     onClose,
