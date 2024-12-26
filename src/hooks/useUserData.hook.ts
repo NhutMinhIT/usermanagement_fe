@@ -93,8 +93,6 @@ export const useUserData = () => {
         delay: 500
     });
 
-
-
     const handleChangePage = (
         _event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number
