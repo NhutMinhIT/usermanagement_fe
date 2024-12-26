@@ -7,9 +7,10 @@ import CreateUserDialog from "./components/create-user-dialog.component";
 
 import styles from "./components/module/style.module.css";
 
-import { useDebounce } from "../../hooks/useDebounce.hook";
 import { useUserData } from "../../hooks/useUserData.hook";
-import UserSearchComponent from "./components/user-search.compoent";
+import { useSearch } from "../../hooks/useSearch.hook";
+import { SearchParams } from "./types/search.type";
+import { SearchInput } from "../../components/Search/SearchInput";
 
 const UserManagementPage = () => {
     // Use custom hook for managing user data
@@ -23,21 +24,11 @@ const UserManagementPage = () => {
     // Dialog state
     const [isUserDialogOpen, setIsUserDialogOpen] = useState<boolean>(false);
 
-    // Debounced fetch for search input
-    const debouncedFetchData = useDebounce(
-        (searchValue: string) => {
-            fetchUserData({ page: 1, limit, search: searchValue });
-        },
-        300,
-        [limit]
-    );
-
-    // Handle search input
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value || "";
-        setSearch(value);
-        debouncedFetchData(value);
-    };
+    const { handleSearchChange } = useSearch<SearchParams>({
+        onSearch: fetchUserData,
+        searchParams: { page: 1, limit: 10 },
+        delay: 500
+    });
 
     // Handle page change
     const handleChangePage = (
@@ -80,7 +71,7 @@ const UserManagementPage = () => {
         <Stack spacing={2} className={styles.usermanagement__page}>
             <div className={styles.search__container}>
                 <div className={styles.search__input}>
-                    <UserSearchComponent
+                    <SearchInput
                         onSearch={handleSearchChange}
                         placeholder="Search...."
                     />
