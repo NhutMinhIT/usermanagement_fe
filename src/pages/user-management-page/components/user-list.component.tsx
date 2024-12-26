@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import {
     Table,
     TableBody,
@@ -49,6 +49,7 @@ const UserListComponent: FC<UserListComponentProps> = ({
         handleOpenUpdateUserDialog,
         handleCloseUpdateUserDialog,
         selectedUser,
+        fetchUserData
     } = useUserData();
 
     return (

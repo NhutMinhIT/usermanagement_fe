@@ -78,6 +78,7 @@ export const useUserData = () => {
         try {
             await removeUser(userId);
             window.alert('User removed successfully');
+            handleReloadUserData();
         } catch (error) {
             console.error('Error removing user:', error);
             throw error;
@@ -91,6 +92,8 @@ export const useUserData = () => {
         searchParams: { page: 1, limit: 10 },
         delay: 500
     });
+
+
 
     const handleChangePage = (
         _event: React.MouseEvent<HTMLButtonElement> | null,
@@ -123,22 +126,17 @@ export const useUserData = () => {
         setOpenRemoveUserDialog(false);
         setSelectedUser(null);
     }
+
     const handleApproveRemoveUser = async () => {
         if (!selectedUser) return;
 
-        setIsLoading(true);
         try {
-            await handleRemoveUser(selectedUser)
-            window.alert('User removed successfully');
-            fetchUserData({ page, limit, search });
-        } catch (error) {
-            console.error('Error removing user:', error);
-        } finally {
-            setIsLoading(false);
+            await handleRemoveUser(selectedUser);
             handleCloseRemoveUserDialog();
+        } catch (error) {
+            console.error('Error in handleApproveRemoveUser:', error);
         }
     };
-
     //action update user
     const handleOpenUpdateUserDialog = (userId: string) => {
         setSelectedUser(userId);
