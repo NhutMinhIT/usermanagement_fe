@@ -1,26 +1,19 @@
-import { IErrorLoginForm, ILoginFormData } from "../types/login.type";
+import { ILoginFormData } from "../types/login.type";
 
-const validateForm = (
-    formData: ILoginFormData,
-    setErrors: (errors: IErrorLoginForm) => void
-): boolean => {
-    let valid = true;
-    const newErrors: IErrorLoginForm = { username: "", password: "" };
+interface ValidationErrors {
+    [key: string]: string;
+}
 
-    // Validate Username
-    if (!formData.username.trim()) {
-        newErrors.username = "Username is required";
-        valid = false;
+export const validateLoginForm = (data: ILoginFormData): ValidationErrors => {
+    const errors: ValidationErrors = {};
+
+    if (!data.username?.trim()) {
+        errors.username = 'Username is required';
     }
 
-    // Validate Password
-    if (!formData.password.trim()) {
-        newErrors.password = "Password is required";
-        valid = false;
+    if (!data.password) {
+        errors.password = 'Password is required';
     }
 
-    setErrors(newErrors);
-    return valid;
-};
-
-export default validateForm;
+    return errors;
+}

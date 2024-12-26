@@ -1,17 +1,35 @@
 import { Box } from "@mui/material";
 import { FC } from "react";
 import styles from "./modules/style.module.css";
-import { LoginFormPropsType } from "../types/login.type";
 import InputField from "../../../components/InputField/InputField";
 import { Link } from "react-router-dom";
 import ButtonLoading from "../../../components/Button/Button";
+import { ILoginFormData } from "../types/login.type";
+
+type LoginFormPropsType = {
+    isLoading: boolean;
+    formData: ILoginFormData;
+    error: {
+        username?: string;
+        password?: string;
+    };
+    touched?: {
+        username?: boolean;
+        password?: boolean;
+    };
+    handleSubmit: (e: any) => void;
+    handleChange: (e: any) => void;
+    handleBlur?: (e: any) => void;
+};
 
 const LoginForm: FC<LoginFormPropsType> = ({
     isLoading,
     formData,
     error,
+    touched,
     handleSubmit,
     handleChange,
+    handleBlur,
 }) => {
 
     return (
@@ -27,7 +45,8 @@ const LoginForm: FC<LoginFormPropsType> = ({
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                error={!!error.username}
+                onBlur={(e) => handleBlur && handleBlur(e)}
+                error={touched?.username && !!error.username}
                 helperText={error.username}
             />
 
@@ -39,7 +58,8 @@ const LoginForm: FC<LoginFormPropsType> = ({
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                error={!!error.password}
+                onBlur={(e) => handleBlur && handleBlur(e)}
+                error={touched?.password && !!error.password}
                 helperText={error.password}
             />
 

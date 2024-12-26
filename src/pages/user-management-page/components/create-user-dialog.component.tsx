@@ -45,7 +45,6 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                 await handleCreateUser(data);
                 onClose();
                 setFormData(initialFormData);
-                window.alert('User created successfully');
                 handleReloadUserData(); // Call reload after successful creation
             } catch (error) {
                 console.error('Error creating user:', error);
