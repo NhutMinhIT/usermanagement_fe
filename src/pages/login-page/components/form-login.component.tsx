@@ -43,7 +43,7 @@ const LoginForm: FC<LoginFormPropsType> = ({
                 fullWidth
                 variant="outlined"
                 label="Username"
-                name="username"
+                name="username-error"
                 value={formData.username}
                 onChange={handleChange}
                 onBlur={(e) => handleBlur && handleBlur(e)}

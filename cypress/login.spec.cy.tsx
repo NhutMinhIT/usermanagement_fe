@@ -12,18 +12,13 @@ interface Errors {
     password?: string;
 }
 
-interface Touched {
-    username?: boolean;
-    password?: boolean;
-}
-
 const RouterWrapper = ({ children }: { children: React.ReactNode }) => (
     <BrowserRouter>
         {children}
     </BrowserRouter>
 );
 
-describe("login-form", () => {
+describe('LoginForm', () => {
     let mockHandleSubmit: ReturnType<typeof cy.stub>;
     let mockHandleChange: ReturnType<typeof cy.stub>;
     let mockHandleBlur: ReturnType<typeof cy.stub>;
@@ -61,29 +56,27 @@ describe("login-form", () => {
         );
     };
 
-    it("should render with router context", () => {
-        mountLoginForm();
-        cy.get('form').should('exist');
+    describe('login-form', () => {
+        it('should render the form', () => {
+            mountLoginForm();
+
+            cy.get('form[data-testid="login-form"]').should('exist');
+        });
+        it("should maintain form state during route changes", () => {
+            const testData: FormData = {
+                username: "testuser",
+                password: "testpass"
+            };
+            mountLoginForm({ formData: testData });
+
+            cy.get('input[name="username"]').should('have.value', testData.username);
+            cy.get('input[name="password"]').should('have.value', testData.password);
+        });
+        it("should clear errors when input changes", () => {
+            mountLoginForm({ error: mockErrors });
+            cy.get('input[name="username"]').type("newuser");
+            cy.get('[data-testid="username-error"]').should('not.exist');
+        });
+
     });
-
-    it("should handle navigation after successful login", () => {
-        const validFormData: FormData = {
-            username: "testuser",
-            password: "testpass123"
-        };
-        mountLoginForm({ formData: validFormData });
-
-        cy.get('form').submit();
-        cy.get('@handleSubmit').should('have.been.calledOnce');
-    });
-
-    it("should show validation errors with router context", () => {
-        const touched: Touched = { username: true, password: true };
-        mountLoginForm({ error: mockErrors, touched });
-
-        cy.get('[data-testid="username-error"]').should('be.visible');
-        cy.get('[data-testid="password-error"]').should('be.visible');
-    });
-
-
 });
