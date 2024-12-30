@@ -72,6 +72,7 @@ describe('LoginForm', () => {
             cy.get('input[name="username"]').should('have.value', testData.username);
             cy.get('input[name="password"]').should('have.value', testData.password);
         });
+
         it("should clear errors when input changes", () => {
             mountLoginForm({ error: mockErrors });
             cy.get('input[name="username"]').type("newuser");
