@@ -27,7 +27,7 @@ const UserManagementPage = () => {
 
     useEffect(() => {
         fetchUserData({ page, limit, search: '' });
-    }, [page, limit]);
+    }, [page, limit, search]);
 
     return (
         <Stack spacing={2} className={styles.usermanagement__page}>

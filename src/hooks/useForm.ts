@@ -26,7 +26,7 @@ export const useForm = <T extends Record<string, any>>(
 
     const handleSubmit = async (
         submitCallback: (formData: T) => Promise<void>
-    ) => {
+    ): Promise<void> => {
         const validationErrors = validateForm(formData);
         setErrors(validationErrors);
 

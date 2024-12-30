@@ -34,6 +34,7 @@ const LoginForm: FC<LoginFormPropsType> = ({
 
     return (
         <Box
+            data-testid="login-form"
             component={"form"}
             onSubmit={handleSubmit}
             className={styles.box__form__login}
