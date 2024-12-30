@@ -1,5 +1,5 @@
 import { FC, FormEvent } from "react";
-import { Box, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useForm } from "../../../hooks/useForm";
 import { validateUserForm } from '../schemas/create-user-schema';
 import { ICreateUser } from "../types/user-managment.type";
@@ -54,6 +54,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
 
     return (
         <Dialog
+            data-testid="create-user-form"
             open={isOpen}
             onClose={onClose}
             TransitionComponent={Transition}
@@ -62,8 +63,14 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
         >
             <DialogTitle>Create New User</DialogTitle>
             <DialogContent>
-                <Box component="form" onSubmit={onSubmit} className={styles.form__create__user}>
+                <Box
+                    data-testid="test"
+                    component="form"
+                    onSubmit={onSubmit}
+                    className={styles.form__create__user}
+                >
                     <InputField
+                        data-testid="username"
                         fullWidth
                         name="username"
                         label="Username"
@@ -74,6 +81,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         helperText={touched.username && errors.username}
                     />
                     <InputField
+                        data-testid="fullName"
                         fullWidth
                         name="fullName"
                         label="Full Name"
@@ -84,6 +92,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         helperText={touched.fullName && errors.fullName}
                     />
                     <InputField
+                        data-testid="email"
                         fullWidth
                         name="email"
                         label="Email"
@@ -94,6 +103,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         helperText={touched.email && errors.email}
                     />
                     <InputField
+                        data-testid="password"
                         fullWidth
                         name="password"
                         type="password"
@@ -107,6 +117,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                     <FormControl fullWidth required>
                         <InputLabel id="role-label">Select Role</InputLabel>
                         <Select
+                            data-testid="role"
                             labelId="role-label"
                             label="Select Role"
                             name="role"
@@ -130,7 +141,19 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         variant="contained"
                         className={styles.button__create__user}
                         size="large"
+                        data-testid="submit-create-user-form"
                     />
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={onClose}
+                        className={styles.button__cancel__create__user}
+                        data-testid="close-create-user-dialog"
+                        size="large"
+                        color="error"
+                    >
+                        Cancel
+                    </Button>
                 </Box>
             </DialogContent>
         </Dialog>

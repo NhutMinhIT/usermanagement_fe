@@ -1,6 +1,6 @@
 import { mount } from "cypress/react";
 import { BrowserRouter } from "react-router-dom";
-import LoginForm from "../src/pages/login-page/components/form-login.component";
+import LoginForm from "../../src/pages/login-page/components/form-login.component";
 
 interface FormData {
     username: string;
