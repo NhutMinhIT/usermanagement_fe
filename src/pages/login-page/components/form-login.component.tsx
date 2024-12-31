@@ -40,6 +40,7 @@ const LoginForm: FC<LoginFormPropsType> = ({
             className={styles.box__form__login}
         >
             <InputField
+                data-testid="username"
                 fullWidth
                 variant="outlined"
                 label="Username"
@@ -53,6 +54,7 @@ const LoginForm: FC<LoginFormPropsType> = ({
 
             <InputField
                 fullWidth
+                data-testid="password"
                 variant="outlined"
                 label="Password"
                 name="password"
