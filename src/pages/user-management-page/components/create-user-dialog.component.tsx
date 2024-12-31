@@ -138,6 +138,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         buttonText="Create User"
                         isLoading={isLoading}
                         fullWidth
+                        disabled={isLoading}
                         variant="contained"
                         className={styles.button__create__user}
                         size="large"
