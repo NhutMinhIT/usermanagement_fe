@@ -147,5 +147,10 @@ describe('LoginForm', () => {
             mountLoginForm({ error: { password: 'Password is required' } });
             cy.get('[data-testid="password"]').should('exist');
         });
+        // it("should call handleSubmit when the form is submitted", () => {
+        //     mountLoginForm();
+        //     cy.get('[data-testid="login-form"]').submit();
+        //     cy.get('@handleSubmit').should('have.been.called');
+        // });
     });
 });
