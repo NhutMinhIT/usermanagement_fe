@@ -27,31 +27,6 @@ const UpdateUserWrapper = ({ children }: { children: ReactNode }) => (
 );
 
 describe("UpdateUserDialog", () => {
-    let mockHandleSubmit: ReturnType<typeof cy.stub>;
-    let mockHandleChange: ReturnType<typeof cy.stub>;
-    let mockHandleBlur: ReturnType<typeof cy.stub>;
-    let mockFormData: FormData;
-    let mockErrors: ErrorsType;
-
-    beforeEach(() => {
-        mockHandleSubmit = cy.stub().as("handleSubmit");
-        mockHandleChange = cy.stub().as("handleChange");
-        mockHandleBlur = cy.stub().as("handleBlur");
-        mockFormData = {
-            username: "",
-            email: "",
-            fullName: "",
-            role: "",
-        };
-        mockErrors = {
-            username: "Username is required",
-            email: "Email is required",
-            fullName: "Full name is required",
-            role: "Role is required",
-        };
-
-
-    });
     const mountUpdateUserDialog = (props = {}) => {
         mount(
             <UpdateUserWrapper>
