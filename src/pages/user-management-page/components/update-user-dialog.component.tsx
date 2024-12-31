@@ -97,11 +97,17 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
     };
 
     return (
-        <Dialog open={isOpen} onClose={onClose} maxWidth="sm" fullWidth>
+        <Dialog
+            open={isOpen}
+            onClose={onClose}
+            maxWidth="sm"
+            fullWidth
+            data-testid="update-user-form">
             <DialogTitle>Update User</DialogTitle>
             <form onSubmit={onSubmit}>
                 <DialogContent>
                     <TextField
+                        data-testid="username"
                         fullWidth
                         margin="dense"
                         name="username"
@@ -113,6 +119,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         helperText={touched.username && errors.username}
                     />
                     <TextField
+                        data-testid="fullName"
                         fullWidth
                         margin="dense"
                         name="fullName"
@@ -124,6 +131,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         helperText={touched.fullName && errors.fullName}
                     />
                     <TextField
+                        data-testid="email"
                         fullWidth
                         margin="dense"
                         name="email"
@@ -139,9 +147,10 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                             id="role-label"
                             disabled
                         >
-                            elect Role
+                            Select Role
                         </InputLabel>
                         <Select
+                            data-testid="role"
                             labelId="role-label"
                             label="Select Role"
                             name="role"
@@ -159,10 +168,11 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose} disabled={isLoading}>
+                    <Button onClick={onClose} disabled={isLoading} data-testid="close-update-user-dialog">
                         Cancel
                     </Button>
                     <Button
+                        data-testid="submit-update-user-form"
                         type="submit"
                         color="primary"
                         variant="contained"
