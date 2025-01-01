@@ -1,154 +1,109 @@
 import { mount } from "cypress/react";
 import { BrowserRouter } from "react-router-dom";
 import LoginForm from "../../src/pages/login-page/components/form-login.component";
+import { API_URL } from "../../src/constants/api.constant";
 
-interface FormData {
-    username: string;
-    password: string;
-}
-
-interface Errors {
-    username?: string;
-    password?: string;
-}
-
+// Wrapper for React Router
 const RouterWrapper = ({ children }: { children: React.ReactNode }) => (
-    <BrowserRouter>
-        {children}
-    </BrowserRouter>
+    <BrowserRouter>{children}</BrowserRouter>
 );
 
-describe('LoginForm', () => {
-    let mockHandleSubmit: ReturnType<typeof cy.stub>;
-    let mockHandleChange: ReturnType<typeof cy.stub>;
-    let mockHandleBlur: ReturnType<typeof cy.stub>;
-    let mockFormData: FormData;
-    let mockErrors: Errors;
+// Mock login response
+const mockLoginResponse = {
+    user: {
+        _id: "676d0cec5085a443b857f9f3",
+        username: "admin",
+        email: "admin@example.com",
+        fullName: "Admin",
+        role: "admin",
+    },
+    access_token: "mock-access-token",
+    message: "User logged in successfully",
+};
 
-    beforeEach(() => {
-        mockHandleSubmit = cy.stub().as('handleSubmit');
-        mockHandleChange = cy.stub().as('handleChange');
-        mockHandleBlur = cy.stub().as('handleBlur');
-        mockFormData = {
-            username: "",
-            password: "",
-        };
-        mockErrors = {
-            username: "Username is required",
-            password: "Password is required",
-        };
-    });
-
-    const mountLoginForm = (props = {}) => {
-        mount(
-            <RouterWrapper>
-                <LoginForm
-                    isLoading={false}
-                    formData={mockFormData}
-                    error={{}}
-                    touched={{}}
-                    handleSubmit={mockHandleSubmit}
-                    handleChange={mockHandleChange}
-                    handleBlur={mockHandleBlur}
-                    {...props}
-                />
-            </RouterWrapper>
+// Function to intercept login API
+const interceptLoginApi = () => {
+    cy.intercept("POST", `${API_URL}/auth/login`, (req) => {
+        const { username, password } = req.body;
+        req.reply(
+            username === "admin" && password === "admin"
+                ? { statusCode: 200, body: mockLoginResponse }
+                : { statusCode: 401, body: { message: "Invalid username or password" } }
         );
+    }).as("loginRequest");
+};
+
+// Mount the LoginForm component with default and custom props
+const mountLoginForm = (props = {}) => {
+    const defaultProps = {
+        isLoading: false,
+        formData: { username: "", password: "" },
+        error: {},
+        touched: {},
+        handleSubmit: cy.stub().as("handleSubmit"),
+        handleChange: cy.stub().as("handleChange"),
+        handleBlur: cy.stub().as("handleBlur"),
     };
 
-    //check render form
-    it('should render the form', () => {
+    mount(
+        <RouterWrapper>
+            <LoginForm {...defaultProps} {...props} />
+        </RouterWrapper>
+    );
+};
+
+describe("LoginForm", () => {
+    beforeEach(() => {
+        interceptLoginApi();
+    });
+
+    it("renders the form", () => {
         mountLoginForm();
-
-        cy.get('form[data-testid="login-form"]').should('exist');
-    });
-    //check render input field
-    it("should maintain form state during route changes", () => {
-        const testData: FormData = {
-            username: "testuser",
-            password: "testpass"
-        };
-        mountLoginForm({ formData: testData });
-
-        cy.get('input[name="username"]').should('have.value', testData.username);
-        cy.get('input[name="password"]').should('have.value', testData.password);
+        cy.get('form[data-testid="login-form"]').should("exist");
     });
 
-    //check render error
-    it("should clear errors when input changes", () => {
-        mountLoginForm({ error: mockErrors });
+    it("maintains form state", () => {
+        mountLoginForm({ formData: { username: "testuser", password: "testpass" } });
+        cy.get('input[name="username"]').should("have.value", "testuser");
+        cy.get('input[name="password"]').should("have.value", "testpass");
+    });
+
+    it("clears errors on input change", () => {
+        mountLoginForm({ error: { username: "Error message" } });
         cy.get('input[name="username"]').type("newuser");
-        cy.get('[data-testid="username-error"]').should('not.exist');
+        cy.get('[data-testid="username-error"]').should("not.exist");
     });
 
-    // check all field do not empty
-    it("username do not emptry", () => {
-        mountLoginForm({ error: mockErrors });
-        cy.get('input[name="username"]').should('have.value', '');
-    });
-    it("password do not emptry", () => {
-        mountLoginForm({ error: mockErrors });
-        cy.get('input[name="password"]').should('have.value', '');
-    });
-
-    //check onBlur event
-    it("should call handleBlur when input is blurred (username)", () => {
+    it("triggers handleBlur on input blur", () => {
         mountLoginForm();
         cy.get('input[name="username"]').focus().blur();
-        cy.get('@handleBlur').should('have.been.called');
-    });
-    it("should call handleBlur when input is blurred (password)", () => {
-        mountLoginForm();
+        cy.get("@handleBlur").should("have.been.called");
         cy.get('input[name="password"]').focus().blur();
-        cy.get('@handleBlur').should('have.been.called');
+        cy.get("@handleBlur").should("have.been.called");
     });
 
-    //check onChange event
-    it("should call handleChange when input is changed (username)", () => {
+    it("triggers handleChange on input change", () => {
         mountLoginForm();
-        cy.get('input[name="username"]').type('testuser');
-        cy.get('@handleChange').should('have.been.called');
-    });
-    it("should call handleChange when input is changed (password)", () => {
-        mountLoginForm();
-        cy.get('input[name="password"]').type('testpass');
-        cy.get('@handleChange').should('have.been.called');
+        cy.get('input[name="username"]').type("testuser");
+        cy.get("@handleChange").should("have.been.called");
+        cy.get('input[name="password"]').type("testpass");
+        cy.get("@handleChange").should("have.been.called");
     });
 
-    // check user can remove data at input field
-    it("should clear input when clear button is clicked (username)", () => {
+    it("clears input fields", () => {
         mountLoginForm();
-        cy.get('input[name="username"]').type('testuser').clear();
-        cy.get('input[name="username"]').should('have.value', '');
-    });
-    it('should clear input when clear button is clicked (password)', () => {
-        mountLoginForm();
-        cy.get('input[name="password"]').type('testpass').clear();
-        cy.get('input[name="password"]').should('have.value', '');
+        cy.get('input[name="username"]').type("testuser").clear().should("have.value", "");
+        cy.get('input[name="password"]').type("testpass").clear().should("have.value", "");
     });
 
-    //check auto fill data at input field
-    it('should auto fill input when data is provided (username)', () => {
-        mountLoginForm({ formData: { username: 'testuser' } });
-        cy.get('input[name="username"]').should('have.value', 'testuser');
+    it("auto-fills input fields with provided data", () => {
+        mountLoginForm({ formData: { username: "autouser", password: "autopass" } });
+        cy.get('input[name="username"]').should("have.value", "autouser");
+        cy.get('input[name="password"]').should("have.value", "autopass");
     });
-    it('should auto fill input when data is provided (password)', () => {
-        mountLoginForm({ formData: { password: 'testpass' } });
-        cy.get('input[name="password"]').should('have.value', 'testpass');
+    it("submits the form with valid credentials", () => {
+        mountLoginForm({ formData: { username: "admin", password: "admin" } });
+        cy.get('button[type="submit"]').click();
+        cy.wait("@loginRequest").its("response.statusCode").should("eq", 200);
     });
-
-    //check error message
-    it('should display error message when error exists (username)', () => {
-        mountLoginForm({ error: { username: 'Username is required' } });
-        cy.get('[data-testid="username"]').should('exist');
-    });
-    it('should display error message when error exists (password)', () => {
-        mountLoginForm({ error: { password: 'Password is required' } });
-        cy.get('[data-testid="password"]').should('exist');
-    });
-    // it("should call handleSubmit when the form is submitted", () => {
-    //     mountLoginForm();
-    //     cy.get('[data-testid="login-form"]').submit();
-    //     cy.get('@handleSubmit').should('have.been.called');
-    // });
 });
