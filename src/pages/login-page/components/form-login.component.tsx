@@ -74,6 +74,7 @@ const LoginForm: FC<LoginFormPropsType> = ({
                 fullWidth
                 type="submit"
                 className={styles.login__button}
+                data-testid="login-button"
             />
             <Box sx={{ mt: 2, textAlign: 'center' }}>
                 <Link

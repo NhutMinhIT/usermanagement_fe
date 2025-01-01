@@ -27,7 +27,7 @@ const interceptLoginApi = () => {
         const { username, password } = req.body;
         req.reply(
             username === "admin" && password === "admin"
-                ? { statusCode: 200, body: mockLoginResponse }
+                ? { statusCode: 201, body: mockLoginResponse }
                 : { statusCode: 401, body: { message: "Invalid username or password" } }
         );
     }).as("loginRequest");
@@ -101,9 +101,11 @@ describe("LoginForm", () => {
         cy.get('input[name="username"]').should("have.value", "autouser");
         cy.get('input[name="password"]').should("have.value", "autopass");
     });
-    it("submits the form with valid credentials", () => {
-        mountLoginForm({ formData: { username: "admin", password: "admin" } });
-        cy.get('button[type="submit"]').click();
-        cy.wait("@loginRequest").its("response.statusCode").should("eq", 200);
+
+    it("submits the form", () => {
+        mountLoginForm({ formData: { username: "admin", password: "admin" }, isLoading: false });
+        cy.get('[data-testid="login-button"]').submit();
+        cy.wait("@loginRequest");
+        cy.get("@handleSubmit").should("have.been.called");
     });
 });
