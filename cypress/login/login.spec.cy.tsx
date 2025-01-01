@@ -102,10 +102,11 @@ describe("LoginForm", () => {
         cy.get('input[name="password"]').should("have.value", "autopass");
     });
 
-    it("submits the form", () => {
-        mountLoginForm({ formData: { username: "admin", password: "admin" }, isLoading: false });
+
+    it("submits the form with valid credentials", () => {
+        mountLoginForm({ formData: { username: "admin", password: "admin" } });
         cy.get('[data-testid="login-button"]').submit();
-        cy.wait("@loginRequest");
+        cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
         cy.get("@handleSubmit").should("have.been.called");
     });
 });
