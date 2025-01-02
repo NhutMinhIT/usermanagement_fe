@@ -8,30 +8,7 @@ const RouterWrapper = ({ children }: { children: React.ReactNode }) => (
     <BrowserRouter>{children}</BrowserRouter>
 );
 
-// Mock login response
-const mockLoginResponse = {
-    user: {
-        _id: "676d0cec5085a443b857f9f3",
-        username: "admin",
-        email: "admin@example.com",
-        fullName: "Admin",
-        role: "admin",
-    },
-    access_token: "mock-access-token",
-    message: "User logged in successfully",
-};
 
-// Function to intercept login API
-const interceptLoginApi = () => {
-    cy.intercept("POST", `${API_URL}/auth/login`, (req) => {
-        const { username, password } = req.body;
-        req.reply(
-            username === "admin" && password === "admin"
-                ? { statusCode: 201, body: mockLoginResponse }
-                : { statusCode: 401, body: { message: "Invalid username or password" } }
-        );
-    }).as("loginRequest");
-};
 
 // Mount the LoginForm component with default and custom props
 const mountLoginForm = (props = {}) => {
@@ -53,6 +30,30 @@ const mountLoginForm = (props = {}) => {
 };
 
 describe("LoginForm", () => {
+    // Mock login response
+    const mockLoginResponse = {
+        user: {
+            _id: "676d0cec5085a443b857f9f3",
+            username: "admin",
+            email: "admin@example.com",
+            fullName: "Admin",
+            role: "admin",
+        },
+        access_token: "mock-access-token",
+        message: "User logged in successfully",
+    };
+
+    // Function to intercept login API
+    const interceptLoginApi = () => {
+        cy.intercept("POST", `${API_URL}/auth/login`, (req) => {
+            const { username, password } = req.body;
+            req.reply(
+                username === "admin" && password === "admin"
+                    ? { statusCode: 201, body: mockLoginResponse }
+                    : { statusCode: 401, body: { message: "Invalid username or password" } }
+            );
+        }).as("loginRequest");
+    };
     beforeEach(() => {
         interceptLoginApi();
     });
@@ -102,11 +103,21 @@ describe("LoginForm", () => {
         cy.get('input[name="password"]').should("have.value", "autopass");
     });
 
-
-    // it("submits the form with valid credentials", () => {
+    // it('check response with login api endpoint', () => {
     //     mountLoginForm({ formData: { username: "admin", password: "admin" } });
+    //     cy.get('[data-testid="username"]').type("admin");
+    //     cy.get('[data-testid="password"]').type("admin");
     //     cy.get('[data-testid="login-form"]').submit();
     //     cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
-    //     cy.get("@handleSubmit").should("have.been.called");
     // });
+
+
+    it("submits the form with valid credentials", () => {
+        mountLoginForm({ formData: { username: "admin", password: "admin" } });
+        cy.get('[data-testid="username"]').type("admin");
+        cy.get('[data-testid="password"]').type("admin");
+        cy.get('[data-testid="login-button"]').click();
+        cy.visit("/usermanagement");
+        cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
+    });
 });

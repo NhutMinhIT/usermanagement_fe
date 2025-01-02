@@ -114,10 +114,12 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         error={touched.password && Boolean(errors.password)}
                         helperText={touched.password && errors.password}
                     />
-                    <FormControl fullWidth required>
+                    <FormControl fullWidth required
+                    >
                         <InputLabel id="role-label">Select Role</InputLabel>
                         <Select
-                            data-testid="role"
+                            id="role"
+                            // data-testid="role"
                             labelId="role-label"
                             label="Select Role"
                             name="role"
@@ -127,7 +129,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                             error={touched.role && Boolean(errors.role)}
                         >
                             {ROLE_OPTIONS.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
+                                <MenuItem key={option.value} value={option.value} data-testid={option}>
                                     {option.label}
                                 </MenuItem>
                             ))}
