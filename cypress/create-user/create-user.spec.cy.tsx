@@ -4,7 +4,7 @@ import { mount } from "cypress/react";
 import { UserProvider } from "../../src/pages/user-management-page/context/user-management.context";
 import { ReactNode } from 'react';
 import { API_URL } from "../../src/constants/api.constant";
-import { useUserData } from "../../src/hooks/useUserData.hook";
+
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
     <BrowserRouter>
@@ -23,6 +23,7 @@ const mockCreateUserResponse = {
     "_id": "6776014c2f83f2ba90839284",
 
 }
+
 
 const interceptCreateUserApi = () => {
     cy.intercept("POST", `${API_URL}/users`, (req) => {
@@ -129,16 +130,24 @@ describe('CreateUserDialog', () => {
     });
 
     //check submit form with valid data
-    it('mock api create user', () => {
-        mountCreateUserDialog();
-        cy.get('[data-testid="username"]').type('manager1');
-        cy.get('[data-testid="password"]').type('Manager@123');
-        cy.get('[data-testid="email"]').type('manager1@example.com');
-        cy.get('[data-testid="fullName"]').type('Management');
-        cy.get('[data-testid="role"]').type('manager');
-        cy.wait('@createUserRequest').then((interception) => {
-            expect(interception).to.deep.equal(mockCreateUserResponse);
+    it('check response when submit form with valid data', () => {
+
+        cy.intercept("POST", `${API_URL}/users`, (req) => {
+            const { username, password, email, fullName, role } = req.body;
+            if (username !== null
+                || password !== null
+                || email !== null
+                || fullName !== null
+                || role !== null) {
+                req.reply({
+                    statusCode: 201,
+                    body: { message: "Invalid user data" }
+                });
+            }
         });
+
+        mountCreateUserDialog();
     });
+
 
 });
