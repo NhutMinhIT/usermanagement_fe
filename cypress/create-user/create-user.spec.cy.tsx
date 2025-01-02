@@ -1,25 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
 import CreateUserDialog from "../../src/pages/user-management-page/components/create-user-dialog.component";
 import { mount } from "cypress/react";
-import * as userDataHook from "../../src/hooks/useUserData.hook";
 import { UserProvider } from "../../src/pages/user-management-page/context/user-management.context";
 import { ReactNode } from 'react';
-
-type ErrorsType = {
-    username?: string;
-    password?: string;
-    email?: string;
-    fullName?: string;
-    role?: string;
-};
-
-type FormData = {
-    username: string;
-    password: string;
-    email: string;
-    fullName: string;
-    role: string;
-};
+import { API_URL } from "../../src/constants/api.constant";
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
     <BrowserRouter>
@@ -29,33 +13,37 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
     </BrowserRouter>
 );
 
+const mockCreateUserResponse = {
+    data: {
+        "username": "manager1",
+        "password": "Manager@123",
+        "role": "manager",
+        "email": "manager1@example.com",
+        "fullName": "Management",
+        "_id": "6776014c2f83f2ba90839284",
+    }
+}
+
+const interceptCreateUserApi = () => {
+    cy.intercept("POST", `${API_URL}/users`, (req) => {
+        const { username, password, email, fullName, role, token } = req.body;
+        req.reply(
+            username === "manager1"
+                && password === "Manager@123"
+                && email === "manager1@example.com"
+                && fullName === "Management"
+                && role === "manager"
+                && token === "mock-access"
+                ? { statusCode: 201, body: mockCreateUserResponse }
+                : { statusCode: 400, body: { message: "Invalid user data" } }
+        )
+    }).as("createUserRequest");
+}
+
 describe('CreateUserDialog', () => {
-    let mockHandleSubmit: ReturnType<typeof cy.stub>;
-    let mockHandleChange: ReturnType<typeof cy.stub>;
-    let mockHandleBlur: ReturnType<typeof cy.stub>;
-    let mockFormData: FormData;
-    let mockErrors: ErrorsType;
-
     beforeEach(() => {
-        mockHandleSubmit = cy.stub().as('handleSubmit');
-        mockHandleChange = cy.stub().as('handleChange');
-        mockHandleBlur = cy.stub().as('handleBlur');
-        mockFormData = {
-            username: "",
-            password: "",
-            email: "",
-            fullName: "",
-            role: "",
-        };
-        mockErrors = {
-            username: "Username is required",
-            password: "Password is required",
-            email: "Email is required",
-            fullName: "Full name is required",
-            role: "Role is required",
-        };
+        interceptCreateUserApi();
     });
-
     const mountCreateUserDialog = (props = {}) => {
         mount(
             <TestWrapper>
@@ -68,6 +56,8 @@ describe('CreateUserDialog', () => {
             </TestWrapper>
         );
     };
+
+
     // check render dialog
     it('should render the dialog', () => {
         mountCreateUserDialog();
@@ -136,4 +126,16 @@ describe('CreateUserDialog', () => {
         mountCreateUserDialog();
         cy.get('[data-testid="create-user-form"]').should('exist');
     });
+
+    //check submit form with valid data
+    it('mock api create user', () => {
+        mountCreateUserDialog();
+        cy.get('[data-testid="username"]').type('manager1');
+        cy.get('[data-testid="password"]').type('Manager@123');
+        cy.get('[data-testid="email"]').type('manager1@example.com');
+        cy.get('[data-testid="fullName"]').type('Management');
+        cy.get('[data-testid="role"]').type('manager');
+        cy.get('[data-testid="submit-create-user-form"]').click();
+    });
+
 });

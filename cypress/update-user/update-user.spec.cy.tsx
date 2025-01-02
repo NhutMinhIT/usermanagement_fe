@@ -4,20 +4,6 @@ import { UserProvider } from "../../src/pages/user-management-page/context/user-
 import UpdateUserDialogComponent from "../../src/pages/user-management-page/components/update-user-dialog.component";
 import { mount } from "cypress/react";
 
-type ErrorsType = {
-    username?: string;
-    email?: string;
-    fullName?: string;
-    role?: string;
-};
-
-type FormData = {
-    username: string;
-    email: string;
-    fullName: string;
-    role: string;
-};
-
 const UpdateUserWrapper = ({ children }: { children: ReactNode }) => (
     <BrowserRouter>
         <UserProvider>
