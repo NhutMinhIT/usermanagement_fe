@@ -4,6 +4,7 @@ import { mount } from "cypress/react";
 import { UserProvider } from "../../src/pages/user-management-page/context/user-management.context";
 import { ReactNode } from 'react';
 import { API_URL } from "../../src/constants/api.constant";
+import { useUserData } from "../../src/hooks/useUserData.hook";
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
     <BrowserRouter>
@@ -14,31 +15,31 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
 );
 
 const mockCreateUserResponse = {
-    data: {
-        "username": "manager1",
-        "password": "Manager@123",
-        "role": "manager",
-        "email": "manager1@example.com",
-        "fullName": "Management",
-        "_id": "6776014c2f83f2ba90839284",
-    }
+    "username": "manager1",
+    "password": "Manager@123",
+    "role": "manager",
+    "email": "manager1@example.com",
+    "fullName": "Management",
+    "_id": "6776014c2f83f2ba90839284",
+
 }
 
 const interceptCreateUserApi = () => {
     cy.intercept("POST", `${API_URL}/users`, (req) => {
-        const { username, password, email, fullName, role, token } = req.body;
+        const { username, password, email, fullName, role } = req.body;
         req.reply(
             username === "manager1"
                 && password === "Manager@123"
                 && email === "manager1@example.com"
                 && fullName === "Management"
                 && role === "manager"
-                && token === "mock-access"
+
                 ? { statusCode: 201, body: mockCreateUserResponse }
                 : { statusCode: 400, body: { message: "Invalid user data" } }
         )
     }).as("createUserRequest");
 }
+
 
 describe('CreateUserDialog', () => {
     beforeEach(() => {
@@ -135,7 +136,9 @@ describe('CreateUserDialog', () => {
         cy.get('[data-testid="email"]').type('manager1@example.com');
         cy.get('[data-testid="fullName"]').type('Management');
         cy.get('[data-testid="role"]').type('manager');
-        cy.get('[data-testid="submit-create-user-form"]').click();
+        cy.wait('@createUserRequest').then((interception) => {
+            expect(interception).to.deep.equal(mockCreateUserResponse);
+        });
     });
 
 });
