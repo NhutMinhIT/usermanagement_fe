@@ -15,15 +15,15 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
 );
 
 const mockCreateUserResponse = {
-    "username": "manager1",
-    "password": "Manager@123",
-    "role": "manager",
-    "email": "manager1@example.com",
-    "fullName": "Management",
-    "_id": "6776014c2f83f2ba90839284",
-
+    data: {
+        "username": "manager1",
+        "password": "Manager@123",
+        "role": "manager",
+        "email": "manager1@example.com",
+        "fullName": "Management",
+        "_id": "6776014c2f83f2ba90839284",
+    }
 }
-
 
 const interceptCreateUserApi = () => {
     cy.intercept("POST", `${API_URL}/users`, (req) => {
@@ -131,22 +131,22 @@ describe('CreateUserDialog', () => {
 
     //check submit form with valid data
     it('check response when submit form with valid data', () => {
-
-        cy.intercept("POST", `${API_URL}/users`, (req) => {
-            const { username, password, email, fullName, role } = req.body;
-            if (username !== null
-                || password !== null
-                || email !== null
-                || fullName !== null
-                || role !== null) {
-                req.reply({
-                    statusCode: 201,
-                    body: { message: "Invalid user data" }
-                });
+        mountCreateUserDialog({
+            formData: {
+                username: "manager1",
+                password: "Manager@123",
+                email: "manager1@example.com",
+                fullName: "Management",
+                role: "manager"
             }
         });
-
-        mountCreateUserDialog();
+        cy.get('[data-testid="username"]').type("manager1");
+        cy.get('[data-testid="password"]').type("Manager@123");
+        cy.get('[data-testid="email"]').type("manager1@example.com");
+        cy.get('[data-testid="fullName"]').type("Management");
+        cy.get('[data-testid="role"]').click().should('exist');
+        cy.get('[data-testid="submit-create-user-form"]').click();
+        cy.wait("@createUserRequest").its("response.statusCode").should("eq", 201);
     });
 
 
