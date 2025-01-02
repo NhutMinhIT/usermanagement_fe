@@ -14,35 +14,36 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
     </BrowserRouter>
 );
 
-const mockCreateUserResponse = {
-    data: {
-        "username": "manager1",
-        "password": "Manager@123",
-        "role": "manager",
-        "email": "manager1@example.com",
-        "fullName": "Management",
-        "_id": "6776014c2f83f2ba90839284",
-    }
-}
-
-const interceptCreateUserApi = () => {
-    cy.intercept("POST", `${API_URL}/users`, (req) => {
-        const { username, password, email, fullName, role } = req.body;
-        req.reply(
-            username === "manager1"
-                && password === "Manager@123"
-                && email === "manager1@example.com"
-                && fullName === "Management"
-                && role === "manager"
-
-                ? { statusCode: 201, body: mockCreateUserResponse }
-                : { statusCode: 400, body: { message: "Invalid user data" } }
-        )
-    }).as("createUserRequest");
-}
 
 
 describe('CreateUserDialog', () => {
+    const mockCreateUserResponse = {
+        data: {
+            "username": "manager1",
+            "password": "Manager@123",
+            "role": "manager",
+            "email": "manager1@example.com",
+            "fullName": "Management",
+            "_id": "6776014c2f83f2ba90839284",
+        }
+    }
+
+    const interceptCreateUserApi = () => {
+        cy.intercept("POST", `${API_URL}/users`, (req) => {
+            const { username, password, email, fullName, role } = req.body;
+            req.reply(
+                username === "manager1"
+                    && password === "Manager@123"
+                    && email === "manager1@example.com"
+                    && fullName === "Management"
+                    && role === "manager"
+
+                    ? { statusCode: 201, body: mockCreateUserResponse }
+                    : { statusCode: 400, body: { message: "Invalid user data" } }
+            )
+        }).as("createUserRequest");
+    }
+
     beforeEach(() => {
         interceptCreateUserApi();
     });
