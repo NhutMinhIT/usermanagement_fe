@@ -1,13 +1,12 @@
 import { useState, useCallback } from 'react';
 import { GetAllUsersParamsType, ICreateUser, IUpdateUser } from '../pages/user-management-page/types/user-managment.type';
-import { useUserManagementContext } from '../pages/user-management-page/context/user-management.context';
 import { IUser } from '../types/user.type';
 import { useSearch } from './useSearch.hook';
 import { SearchParams } from '../pages/user-management-page/types/search.type';
+import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/user-management-page/services/user.service';
 
 
 export const useUserData = () => {
-    const { getAllUsers, createUser, updateUser, removeUser, getUserById } = useUserManagementContext();
     const [data, setData] = useState<IUser[]>([]);
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
