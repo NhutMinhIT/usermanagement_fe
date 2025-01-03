@@ -47,6 +47,14 @@ const UserManagementPage = () => {
                     <AddCircleIcon color="success" fontSize="large" />
                     Add
                 </Button>
+                <Button
+                    className="btn__reload-user"
+                    variant="outlined"
+                    color="info"
+                    onClick={handleReloadUserData}
+                >
+                    Reload Data
+                </Button>
             </div>
 
             <UserListComponent
