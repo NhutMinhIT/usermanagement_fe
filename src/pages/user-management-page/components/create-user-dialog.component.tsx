@@ -119,7 +119,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         <InputLabel id="role-label">Select Role</InputLabel>
                         <Select
                             id="role"
-                            // data-testid="role"
+                            data-testid="role"
                             labelId="role-label"
                             label="Select Role"
                             name="role"
@@ -129,7 +129,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                             error={touched.role && Boolean(errors.role)}
                         >
                             {ROLE_OPTIONS.map((option) => (
-                                <MenuItem key={option.value} value={option.value} data-testid={option}>
+                                <MenuItem key={option.value} value={option.value} data-testid={option.value}>
                                     {option.label}
                                 </MenuItem>
                             ))}

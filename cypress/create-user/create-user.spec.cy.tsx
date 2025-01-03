@@ -145,8 +145,8 @@ describe('CreateUserDialog', () => {
         cy.get('[data-testid="password"]').type("Manager@123");
         cy.get('[data-testid="email"]').type("manager1@example.com");
         cy.get('[data-testid="fullName"]').type("Management");
-        cy.get('[id="role"]').click({ force: true })
-        cy.get('[data-testid="manager"]').click();
+        cy.get('[id="role"]').click({ force: true });
+        cy.get('[data-testid="manager"]').should('be.visible').click({ force: true });
         cy.get('[data-testid="submit-create-user-form"]').click();
         cy.wait("@createUserRequest").its("response.statusCode").should("eq", 201);
     });
