@@ -36,7 +36,6 @@ const LoginForm: FC<LoginFormPropsType> = ({
         <Box
             data-testid="login-form"
             component={"form"}
-            onSubmit={handleSubmit}
             className={styles.box__form__login}
         >
             <InputField
@@ -72,8 +71,8 @@ const LoginForm: FC<LoginFormPropsType> = ({
                 buttonText="Login"
                 variant="contained"
                 fullWidth
-                type="submit"
                 className={styles.login__button}
+                onClick={handleSubmit}
                 data-testid="login-button"
             />
             <Box sx={{ mt: 2, textAlign: 'center' }}>

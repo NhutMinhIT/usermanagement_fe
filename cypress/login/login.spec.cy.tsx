@@ -8,28 +8,8 @@ const RouterWrapper = ({ children }: { children: React.ReactNode }) => (
     <BrowserRouter>{children}</BrowserRouter>
 );
 
-
-
-// Mount the LoginForm component with default and custom props
-const mountLoginForm = (props = {}) => {
-    const defaultProps = {
-        isLoading: false,
-        formData: { username: "", password: "" },
-        error: {},
-        touched: {},
-        handleSubmit: cy.stub().as("handleSubmit"),
-        handleChange: cy.stub().as("handleChange"),
-        handleBlur: cy.stub().as("handleBlur"),
-    };
-
-    mount(
-        <RouterWrapper>
-            <LoginForm {...defaultProps} {...props} />
-        </RouterWrapper>
-    );
-};
-
 describe("LoginForm", () => {
+
     // Mock login response
     const mockLoginResponse = {
         user: {
@@ -57,6 +37,24 @@ describe("LoginForm", () => {
     beforeEach(() => {
         interceptLoginApi();
     });
+    // Mount the LoginForm component with default and custom props
+    const mountLoginForm = (props = {}) => {
+        const defaultProps = {
+            isLoading: false,
+            formData: { username: "", password: "" },
+            error: {},
+            touched: {},
+            handleSubmit: cy.stub().as("handleSubmit"),
+            handleChange: cy.stub().as("handleChange"),
+            handleBlur: cy.stub().as("handleBlur"),
+        };
+
+        mount(
+            <RouterWrapper>
+                <LoginForm {...defaultProps} {...props} />
+            </RouterWrapper>
+        );
+    };
 
     it("renders the form", () => {
         mountLoginForm();
@@ -103,21 +101,20 @@ describe("LoginForm", () => {
         cy.get('input[name="password"]').should("have.value", "autopass");
     });
 
-    // it('check response with login api endpoint', () => {
-    //     mountLoginForm({ formData: { username: "admin", password: "admin" } });
-    //     cy.get('[data-testid="username"]').type("admin");
-    //     cy.get('[data-testid="password"]').type("admin");
-    //     cy.get('[data-testid="login-form"]').submit();
-    //     cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
-    // });
-
-
-    it("submits the form with valid credentials", () => {
+    it('check response with login api endpoint', () => {
         mountLoginForm({ formData: { username: "admin", password: "admin" } });
         cy.get('[data-testid="username"]').type("admin");
         cy.get('[data-testid="password"]').type("admin");
         cy.get('[data-testid="login-button"]').click();
-        cy.visit("/usermanagement");
         cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
     });
+
+
+    // it("submits the form with valid credentials", () => {
+    //     mountLoginForm({ formData: { username: "admin", password: "admin" } });
+    //     cy.get('[data-testid="username"]').type("admin");
+    //     cy.get('[data-testid="password"]').type("admin");
+    //     cy.get('[data-testid="login-button"]').click();
+    //     cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
+    // });
 });
