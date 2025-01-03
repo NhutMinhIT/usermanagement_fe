@@ -90,6 +90,13 @@ describe('My First Test', () => {
       .should('have.value', 'admin')
   })
 
+  //check onBlur username/password
+  it('should onBlur the username', () => {
+    cy.visit('localhost:3000/login')
+    cy.get('input[name="username"]').focus().blur({ force: true })
+    cy.get('input[name="password"]').focus().blur({ force: true })
+  })
+
   // check login successfully
   it('check response with login api endpoint', () => {
     cy.visit('localhost:3000/login')
