@@ -101,20 +101,20 @@ describe("LoginForm", () => {
         cy.get('input[name="password"]').should("have.value", "autopass");
     });
 
-    it('check response with login api endpoint', () => {
-        mountLoginForm({ formData: { username: "admin", password: "admin" } });
-        cy.get('[data-testid="username"]').type("admin");
-        cy.get('[data-testid="password"]').type("admin");
-        cy.get('[data-testid="login-button"]').click();
-        cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
-    });
-
-
-    // it("submits the form with valid credentials", () => {
+    // it('check response with login api endpoint', () => {
     //     mountLoginForm({ formData: { username: "admin", password: "admin" } });
     //     cy.get('[data-testid="username"]').type("admin");
     //     cy.get('[data-testid="password"]').type("admin");
     //     cy.get('[data-testid="login-button"]').click();
     //     cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
     // });
+
+
+    it("submits the form with valid credentials", () => {
+        mountLoginForm({ formData: { username: "admin", password: "admin" } });
+        cy.get('[data-testid="username"]').type("admin");
+        cy.get('[data-testid="password"]').type("admin");
+        cy.get('[data-testid="login-button"]').click();
+        cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
+    });
 });
