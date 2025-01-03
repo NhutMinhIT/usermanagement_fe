@@ -27,23 +27,21 @@ const LoginPage: React.FC = () => {
         formData,
         handleBlur,
         handleChange,
-        handleSubmit
+        // handleSubmit
     } = useForm<ILoginFormData>(initialFormData, validateLoginForm);
 
-    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await handleSubmit(async (data) => {
-            try {
-                await login(data.username, data.password);
-                if (account && account.user.role === EUserRole.ADMIN) {
-                    navigate(USER_MANAGEMENT_PAGE);
-                } else if (account && account.user.role === EUserRole.USER) {
-                    navigate(HOME_PAGE);
-                }
-            } catch (error) {
-                console.error("Error login:", error);
+        try {
+            await login(formData.username, formData.password);
+            if (account && account.user.role === EUserRole.ADMIN) {
+                navigate(USER_MANAGEMENT_PAGE);
+            } else if (account && account.user.role === EUserRole.USER) {
+                navigate(HOME_PAGE);
             }
-        });
+        } catch (error) {
+            console.error("Error login:", error);
+        }
     }
 
     return (
@@ -65,7 +63,7 @@ const LoginPage: React.FC = () => {
                 formData={formData}
                 error={errors}
                 touched={touched}
-                handleSubmit={onSubmit}
+                handleSubmit={handleSubmit}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
             />
