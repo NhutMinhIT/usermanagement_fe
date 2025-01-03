@@ -1,7 +1,7 @@
 import { mount } from "cypress/react";
 import { BrowserRouter } from "react-router-dom";
-import LoginForm from "../../src/pages/login-page/components/form-login.component";
-import { API_URL } from "../../src/constants/api.constant";
+import LoginForm from "../../../src/pages/login-page/components/form-login.component";
+import { API_URL } from "../../../src/constants/api.constant";
 
 // Wrapper for React Router
 const RouterWrapper = ({ children }: { children: React.ReactNode }) => (

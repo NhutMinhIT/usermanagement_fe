@@ -1,9 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
-import CreateUserDialog from "../../src/pages/user-management-page/components/create-user-dialog.component";
+import CreateUserDialog from "../../../src/pages/user-management-page/components/create-user-dialog.component";
 import { mount } from "cypress/react";
-import { UserProvider } from "../../src/pages/user-management-page/context/user-management.context";
+import { UserProvider } from "../../../src/pages/user-management-page/context/user-management.context";
 import { ReactNode } from 'react';
-import { API_URL } from "../../src/constants/api.constant";
+import { API_URL } from "../../../src/constants/api.constant";
 
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
