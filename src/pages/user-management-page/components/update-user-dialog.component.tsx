@@ -10,12 +10,14 @@ import {
     FormControl,
     InputLabel,
     Select,
+    Box,
 } from "@mui/material";
 import { IUpdateUser } from "../types/user-managment.type";
 import { ROLE_OPTIONS } from "../../../constants/role.constant";
 import { validateUpdateUser } from "../schemas/update-user-schema";
 import { useUserData } from "../../../hooks/useUserData.hook";
 import { useForm } from "../../../hooks/useForm";
+import ButtonLoading from "../../../components/Button/Button";
 
 type UpdateUserDialogComponentProps = {
     isOpen: boolean;
@@ -104,7 +106,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
             fullWidth
             data-testid="update-user-form">
             <DialogTitle>Update User</DialogTitle>
-            <form onSubmit={onSubmit}>
+            <Box component={"form"} onSubmit={onSubmit}>
                 <DialogContent>
                     <TextField
                         data-testid="username"
@@ -154,13 +156,14 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                             labelId="role-label"
                             label="Select Role"
                             name="role"
+                            id="update-role"
                             value={formData.role}
                             onChange={(e) => handleSelectChange('role', e.target.value)}
                             onBlur={() => handleBlur('role')}
                             error={touched.role && Boolean(errors.role)}
                         >
                             {ROLE_OPTIONS.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
+                                <MenuItem key={option.value} value={option.value} data-testid={option.value}>
                                     {option.label}
                                 </MenuItem>
                             ))}
@@ -171,17 +174,18 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                     <Button onClick={onClose} disabled={isLoading} data-testid="close-update-user-dialog">
                         Cancel
                     </Button>
-                    <Button
-                        data-testid="submit-update-user-form"
+                    <ButtonLoading
                         type="submit"
-                        color="primary"
-                        variant="contained"
+                        buttonText="Update User"
+                        isLoading={isLoading}
+                        fullWidth
                         disabled={isLoading}
-                    >
-                        {isLoading ? "Updating..." : "Update"}
-                    </Button>
+                        variant="contained"
+                        size="large"
+                        data-testid="submit-update-user-form"
+                    />
                 </DialogActions>
-            </form>
+            </Box>
         </Dialog>
     );
 };

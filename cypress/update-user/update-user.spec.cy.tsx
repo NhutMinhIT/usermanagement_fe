@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "../../src/pages/user-management-page/context/user-management.context";
 import UpdateUserDialogComponent from "../../src/pages/user-management-page/components/update-user-dialog.component";
 import { mount } from "cypress/react";
+import { API_URL } from "../../src/constants/api.constant";
 
 const UpdateUserWrapper = ({ children }: { children: ReactNode }) => (
     <BrowserRouter>
@@ -11,15 +12,42 @@ const UpdateUserWrapper = ({ children }: { children: ReactNode }) => (
         </UserProvider>
     </BrowserRouter>
 );
-
 describe("UpdateUserDialog", () => {
+
+    const mockUpdateUserResponse = {
+        "_id": "6776014c2f83f2ba90839284",
+        "username": "manager12",
+        "password": "Manager@123",
+        "role": "manager",
+        "email": "manager12@example.com",
+        "fullName": "Management",
+    };
+    const interceptUpdateUserApi = () => {
+        let access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiNjc2ZDBjZWM1MDg1YTQ0M2I4NTdmOWYzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM1ODczMzI3LCJleHAiOjE3MzU4NzY5Mjd9.D3_LV05X0HQKBngVxIiPHAAdPVKzToDhNIFOiyKj2tk'
+        cy.intercept("PUT", `${API_URL}/users/6776014c2f83f2ba90839284`, (req) => {
+            req.headers.authorization = `${access_token}`;
+            const { username, email, fullName, role } = req.body;
+            req.reply(
+                username === "manager12"
+                    && email === "manager12@example.com"
+                    && fullName === "Management"
+                    && role === "manager"
+                    ? { statusCode: 200, body: mockUpdateUserResponse }
+                    : { statusCode: 400, body: { message: "Invalid user data" } }
+            )
+        }).as("updateUserRequest");
+    }
+    beforeEach(() => {
+        interceptUpdateUserApi();
+    });
+
     const mountUpdateUserDialog = (props = {}) => {
         mount(
             <UpdateUserWrapper>
                 <UpdateUserDialogComponent
                     isOpen={true}
                     onClose={() => { }}
-                    userId="1"
+                    userId="6776014c2f83f2ba90839284"
                     handleReloadUserData={() => { }}
                     {...props}
                 />
@@ -143,5 +171,23 @@ describe("UpdateUserDialog", () => {
     it('should handle role select blur', () => {
         mountUpdateUserDialog();
         cy.get('[data-testid="role"]').click()
+    });
+    //check submit form with valid data
+    it('check response when submit form with valid data', () => {
+        mountUpdateUserDialog({
+            formData: {
+                username: "manager12",
+                email: "manager12@example.com",
+                fullName: "Management",
+                role: "manager"
+            }
+        });
+        cy.get('[data-testid="username"]').type("manager12");
+        cy.get('[data-testid="email"]').type("manager12@example.com");
+        cy.get('[data-testid="fullName"]').type("Management");
+        cy.get('[id="update-role"]').click({ force: true })
+        cy.get('[data-testid="manager"]').click({ force: true });
+        cy.get('[data-testid="submit-update-user-form"]').click();
+        cy.wait("@updateUserRequest").its("response.statusCode").should("eq", 201);
     });
 });
