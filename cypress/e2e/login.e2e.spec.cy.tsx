@@ -27,15 +27,67 @@ describe('My First Test', () => {
     interceptLoginApi();
   });
 
-  it('Gets, types and asserts', () => {
+  // check render page
+  it('should render the login page', () => {
+    cy.visit('localhost:3000/login')
+    cy.contains('Login').should('exist');
+  });
+
+
+  //checkrender usernae-input fields
+  it('should render the input fields', () => {
+    cy.visit('localhost:3000/login')
+    cy.get('[data-testid="username"]').should('exist');
+  })
+
+  //check render password-input fields
+  it('should render the input fields', () => {
+    cy.visit('localhost:3000/login')
+    cy.get('[data-testid="password"]').should('exist');
+  })
+
+  //check render login button
+  it('should render the input fields', () => {
+    cy.visit('localhost:3000/login')
+    cy.get('[data-testid="login-button"]').should('exist');
+  })
+
+  // check render form
+  it('should render the form', () => {
+    cy.visit('localhost:3000/login')
+    cy.get('form[data-testid="login-form"]').should("exist");
+  })
+
+  //check auto fill username
+  it('should fill the username', () => {
     cy.visit('localhost:3000/login')
     cy.get('input[name="username"]')
       .type('admin')
       .should('have.value', 'admin')
+  })
+
+  //check auto fill password
+  it('should fill the password', () => {
+    cy.visit('localhost:3000/login')
     cy.get('input[name="password"]')
       .type('admin')
       .should('have.value', 'admin')
-    cy.get('form[data-testid="login-form"]').should("exist");
+  })
+
+  //check donot empty username
+  it('should not empty the username', () => {
+    cy.visit('localhost:3000/login')
+    cy.get('input[name="username"]')
+      .type('admin')
+      .should('have.value', 'admin')
+  })
+
+  //check donot empty password
+  it('should not empty the password', () => {
+    cy.visit('localhost:3000/login')
+    cy.get('input[name="password"]')
+      .type('admin')
+      .should('have.value', 'admin')
   })
 
   // check login successfully
