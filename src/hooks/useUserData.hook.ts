@@ -154,6 +154,7 @@ export const useUserData = () => {
         page,
         limit,
         search,
+        setSearch,
         isCreateUserDialog,
         openRemoveUserDialog,
         openUpdateUserDialog,

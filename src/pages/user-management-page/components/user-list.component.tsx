@@ -49,7 +49,6 @@ const UserListComponent: FC<UserListComponentProps> = ({
         handleOpenUpdateUserDialog,
         handleCloseUpdateUserDialog,
         selectedUser,
-        fetchUserData
     } = useUserData();
 
     return (
