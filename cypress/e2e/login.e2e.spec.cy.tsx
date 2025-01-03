@@ -1,6 +1,6 @@
 import { API_URL } from "../../src/constants/api.constant";
 
-describe('My First Test', () => {
+describe('Login Page', () => {
   const mockLoginResponse = {
     user: {
       _id: "676d0cec5085a443b857f9f3",
@@ -109,9 +109,10 @@ describe('My First Test', () => {
     cy.get('form[data-testid="login-form"]').should("exist");
     cy.get('[data-testid="login-button"]').click()
     cy.wait("@loginRequest").its("response.statusCode").should("eq", 201);
+    cy.url().should("eq", "http://localhost:3000/user-management");
   })
 
-  // check login failed
+  //check login failed
   it('check response with login api endpoint', () => {
     cy.visit('localhost:3000/login')
     cy.get('input[name="username"]')
