@@ -1,5 +1,5 @@
 
-const HomePage = () => {
+const HomePage = (): JSX.Element => {
     return (
         <div>This is Home Page</div>
     )

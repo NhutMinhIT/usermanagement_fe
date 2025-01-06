@@ -1,5 +1,5 @@
 import { Box, TextField } from "@mui/material";
-import { FC } from "react";
+import { FC, memo } from "react";
 import styles from "./modules/style.module.css";
 import { Link } from "react-router-dom";
 import ButtonLoading from "../../../components/Button/Button";
@@ -75,20 +75,20 @@ const LoginForm: FC<LoginFormPropsType> = ({
                 onClick={handleSubmit}
                 data-testid={LOGIN_BUTTON_SUBMIT_DATA_TESTID}
             />
-            <Box sx={{ mt: 2, textAlign: 'center' }}>
+            <Box sx={{ mt: 2, textAlign: 'center', gap: 10, display: 'flex', justifyContent: 'center' }}>
                 <Link
                     to={'#'}
                 >
+                    {LOGIN_BUTTON_REGISTER}
+                </Link>
+
+                <Link to="#" >
                     {FORGOT_PASSWORD}
                 </Link>
-                <Box mt={1}>
-                    <Link to="#">
-                        {LOGIN_BUTTON_REGISTER}
-                    </Link>
-                </Box>
+
             </Box>
         </Box>
     );
 };
 
-export default LoginForm;
+export default memo(LoginForm);
