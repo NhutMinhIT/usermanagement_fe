@@ -6,6 +6,7 @@ import CreateUserDialog from "./components/create-user-dialog.component";
 import styles from "./components/module/style.module.css";
 import { SearchInput } from "../../components/Search/SearchInput";
 import { useUserData } from "../../hooks/useUserData.hook";
+import { CREATE_USER_BUTTON, RELOAD_USER_BUTTON, SEARCH_INPUT_PLACEHOLDER } from "./constant";
 
 const UserManagementPage = () => {
     const {
@@ -35,7 +36,7 @@ const UserManagementPage = () => {
                 <div className={styles.search__input}>
                     <SearchInput
                         onSearch={handleSearchChange}
-                        placeholder="Search...."
+                        placeholder={SEARCH_INPUT_PLACEHOLDER}
                     />
                 </div>
                 <Button
@@ -45,7 +46,7 @@ const UserManagementPage = () => {
                     onClick={handleOpenUserDialog}
                 >
                     <AddCircleIcon color="success" fontSize="large" />
-                    Add
+                    {CREATE_USER_BUTTON}
                 </Button>
                 <Button
                     className="btn__reload-user"
@@ -53,7 +54,7 @@ const UserManagementPage = () => {
                     color="info"
                     onClick={handleReloadUserData}
                 >
-                    Reload Data
+                    {RELOAD_USER_BUTTON}
                 </Button>
             </div>
 

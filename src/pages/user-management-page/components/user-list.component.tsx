@@ -18,6 +18,7 @@ import { useUserData } from '../../../hooks/useUserData.hook';
 import styles from './module/style.module.css';
 import { rowHeaderMapping, StyledTableCell, StyledTableRow } from './module/table.';
 import { IUser } from '../../../types/user.type';
+import { DIALOG_CONFIRM_REMOVE_USER_TITLE, NO_DATA_AVAILABLE, USER_LOADING } from '../constant';
 
 type UserListComponentProps = {
     data: IUser[];
@@ -66,7 +67,7 @@ const UserListComponent: FC<UserListComponentProps> = ({
                         {isLoading ? (
                             <StyledTableRow>
                                 <StyledTableCell align="center" colSpan={rowHeaderMapping.length}>
-                                    Loading...
+                                    {USER_LOADING}
                                 </StyledTableCell>
                             </StyledTableRow>
                         ) : data.length > 0 ? (
@@ -93,7 +94,7 @@ const UserListComponent: FC<UserListComponentProps> = ({
                         ) : (
                             <StyledTableRow>
                                 <StyledTableCell align="center" colSpan={rowHeaderMapping.length}>
-                                    No data available
+                                    {NO_DATA_AVAILABLE}
                                 </StyledTableCell>
                             </StyledTableRow>
                         )}
@@ -112,7 +113,7 @@ const UserListComponent: FC<UserListComponentProps> = ({
 
             {/* Remove User Dialog */}
             <ConfirmDialog
-                title="Are you sure you want to delete this user?"
+                title={DIALOG_CONFIRM_REMOVE_USER_TITLE}
                 isOpen={openRemoveUserDialog}
                 onClose={handleCloseRemoveUserDialog}
                 onApprove={handleApproveRemoveUser}

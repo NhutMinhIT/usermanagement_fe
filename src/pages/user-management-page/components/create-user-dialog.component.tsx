@@ -8,6 +8,7 @@ import ButtonLoading from "../../../components/Button/Button";
 import Transition from "../../../components/Dialog/dialog-transition";
 import styles from './module/style.module.css';
 import { useUserData } from "../../../hooks/useUserData.hook";
+import { BUTTON_CANCEL_CREATE_USER_DATA_TEST_ID, BUTTON_CANCEL_CREATE_USER_TEXT, BUTTON_SUBMIT_CREATE_USER_DATA_TEST_ID, BUTTON_SUBMIT_CREATE_USER_TEXT, DIALOG_CREATE_USER_DATA_TEST_ID, DIALOG_CREATE_USER_TITLE, SELECT_ROLE_DATA_TESTID, SELECT_ROLE_LABEL, SELECT_ROLE_LABEL_ID, SELECT_ROLE_NAME, TEXTFIELD_EMAIL_DATA_TESTID, TEXTFIELD_EMAIL_LABEL, TEXTFIELD_EMAIL_NAME, TEXTFIELD_FULLNAME_DATA_TESTID, TEXTFIELD_FULLNAME_LABEL, TEXTFIELD_FULLNAME_NAME, TEXTFIELD_PASSWORD_DATA_TESTID, TEXTFIELD_PASSWORD_LABEL, TEXTFIELD_PASSWORD_NAME, TEXTFIELD_USERNAME_DATA_TESTID, TEXTFIELD_USERNAME_LABEL, TEXTFIELD_USERNAME_NAME } from "../constant";
 
 const initialFormData: ICreateUser = {
     username: '',
@@ -45,7 +46,6 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                 setFormData(initialFormData);
                 handleReloadUserData();
             } catch (error) {
-                console.error('Error creating user:', error);
                 window.alert('Failed to create user. Please try again.');
             }
         });
@@ -53,14 +53,14 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
 
     return (
         <Dialog
-            data-testid="create-user-form"
+            data-testid={DIALOG_CREATE_USER_DATA_TEST_ID}
             open={isOpen}
             onClose={onClose}
             TransitionComponent={Transition}
             fullWidth
             className={styles.create__user__dialog}
         >
-            <DialogTitle>Create New User</DialogTitle>
+            <DialogTitle>{DIALOG_CREATE_USER_TITLE}</DialogTitle>
             <DialogContent>
                 <Box
                     data-testid="test"
@@ -69,62 +69,62 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                     className={styles.form__create__user}
                 >
                     <TextField
-                        data-testid="username"
+                        data-testid={TEXTFIELD_USERNAME_DATA_TESTID}
                         fullWidth
-                        name="username"
-                        label="Username"
+                        name={TEXTFIELD_USERNAME_NAME}
+                        label={TEXTFIELD_USERNAME_LABEL}
                         value={formData.username.trim()}
                         onChange={handleChange}
-                        onBlur={() => handleBlur('username')}
+                        onBlur={() => handleBlur(TEXTFIELD_USERNAME_NAME)}
                         error={touched.username && Boolean(errors.username)}
                         helperText={touched.username && errors.username}
                     />
                     <TextField
-                        data-testid="fullName"
+                        data-testid={TEXTFIELD_FULLNAME_DATA_TESTID}
                         fullWidth
-                        name="fullName"
-                        label="Full Name"
+                        name={TEXTFIELD_FULLNAME_NAME}
+                        label={TEXTFIELD_FULLNAME_LABEL}
                         value={formData.fullName}
                         onChange={handleChange}
-                        onBlur={() => handleBlur('fullName')}
+                        onBlur={() => handleBlur(TEXTFIELD_FULLNAME_NAME)}
                         error={touched.fullName && Boolean(errors.fullName)}
                         helperText={touched.fullName && errors.fullName}
                     />
                     <TextField
-                        data-testid="email"
+                        data-testid={TEXTFIELD_EMAIL_DATA_TESTID}
                         fullWidth
-                        name="email"
-                        label="Email"
+                        name={TEXTFIELD_EMAIL_NAME}
+                        label={TEXTFIELD_EMAIL_LABEL}
                         value={formData.email.trim()}
                         onChange={handleChange}
-                        onBlur={() => handleBlur('email')}
+                        onBlur={() => handleBlur(TEXTFIELD_EMAIL_NAME)}
                         error={touched.email && Boolean(errors.email)}
                         helperText={touched.email && errors.email}
                     />
                     <TextField
-                        data-testid="password"
+                        data-testid={TEXTFIELD_PASSWORD_DATA_TESTID}
                         fullWidth
-                        name="password"
+                        name={TEXTFIELD_PASSWORD_NAME}
                         type="password"
-                        label="Password"
+                        label={TEXTFIELD_PASSWORD_LABEL}
                         value={formData.password}
                         onChange={handleChange}
-                        onBlur={() => handleBlur('password')}
+                        onBlur={() => handleBlur(TEXTFIELD_PASSWORD_NAME)}
                         error={touched.password && Boolean(errors.password)}
                         helperText={touched.password && errors.password}
                     />
                     <FormControl fullWidth required
                     >
-                        <InputLabel id="role-label">Select Role</InputLabel>
+                        <InputLabel id={SELECT_ROLE_LABEL_ID}>Select Role</InputLabel>
                         <Select
                             id="role"
-                            data-testid="role"
-                            labelId="role-label"
-                            label="Select Role"
-                            name="role"
+                            data-testid={SELECT_ROLE_DATA_TESTID}
+                            labelId={SELECT_ROLE_LABEL_ID}
+                            label={SELECT_ROLE_LABEL}
+                            name={SELECT_ROLE_NAME}
                             value={formData.role}
-                            onChange={(e) => handleSelectChange('role', e.target.value)}
-                            onBlur={() => handleBlur('role')}
+                            onChange={(e) => handleSelectChange(SELECT_ROLE_NAME, e.target.value)}
+                            onBlur={() => handleBlur(SELECT_ROLE_NAME)}
                             error={touched.role && Boolean(errors.role)}
                         >
                             {Object.entries(ROLE_OPTIONS).map(([value, label]) => (
@@ -136,25 +136,25 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                     </FormControl>
                     <ButtonLoading
                         type="submit"
-                        buttonText="Create User"
+                        buttonText={BUTTON_SUBMIT_CREATE_USER_TEXT}
                         isLoading={isLoading}
                         fullWidth
                         disabled={isLoading}
                         variant="contained"
                         className={styles.button__create__user}
                         size="large"
-                        data-testid="submit-create-user-form"
+                        data-testid={BUTTON_SUBMIT_CREATE_USER_DATA_TEST_ID}
                     />
                     <Button
                         fullWidth
                         variant="contained"
                         onClick={onClose}
                         className={styles.button__cancel__create__user}
-                        data-testid="close-create-user-dialog"
+                        data-testid={BUTTON_CANCEL_CREATE_USER_DATA_TEST_ID}
                         size="large"
                         color="error"
                     >
-                        Cancel
+                        {BUTTON_CANCEL_CREATE_USER_TEXT}
                     </Button>
                 </Box>
             </DialogContent>
