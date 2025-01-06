@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -18,6 +18,7 @@ import { validateUpdateUser } from "../schemas/update-user-schema";
 import { useUserData } from "../../../hooks/useUserData.hook";
 import { useForm } from "../../../hooks/useForm";
 import ButtonLoading from "../../../components/Button/Button";
+import { BUTTON_CANCEL_UPDATE_USER_DATA_TEST_ID, BUTTON_CANCEL_UPDATE_USER_TEXT, BUTTON_SUBMIT_UPDATE_USER_DATA_TEST_ID, BUTTON_SUBMIT_UPDATE_USER_TEXT, DIALOG_UPDATE_USER_DATA_TEST_ID, DIALOG_UPDATE_USER_TITLE, SELECT_ROLE_DATA_TESTID, SELECT_ROLE_LABEL, SELECT_ROLE_LABEL_ID, SELECT_ROLE_NAME, SELECT_ROLE_TITLE, TEXTFIELD_EMAIL_DATA_TESTID, TEXTFIELD_EMAIL_LABEL, TEXTFIELD_EMAIL_NAME, TEXTFIELD_FULLNAME_DATA_TESTID, TEXTFIELD_FULLNAME_LABEL, TEXTFIELD_FULLNAME_NAME, TEXTFIELD_USERNAME_DATA_TESTID, TEXTFIELD_USERNAME_LABEL, TEXTFIELD_USERNAME_NAME, USER_LOADING } from "../constant";
 
 type UpdateUserDialogComponentProps = {
     isOpen: boolean;
@@ -78,7 +79,7 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
     if (loadingData) {
         return (
             <Dialog open={isOpen} onClose={onClose}>
-                <DialogTitle>Loading...</DialogTitle>
+                <DialogTitle>{USER_LOADING}</DialogTitle>
             </Dialog>
         );
     }
@@ -104,62 +105,62 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
             onClose={onClose}
             maxWidth="sm"
             fullWidth
-            data-testid="update-user-form">
-            <DialogTitle>Update User</DialogTitle>
+            data-testid={DIALOG_UPDATE_USER_DATA_TEST_ID}>
+            <DialogTitle>{DIALOG_UPDATE_USER_TITLE}</DialogTitle>
             <Box component={"form"} onSubmit={onSubmit}>
                 <DialogContent>
                     <TextField
-                        data-testid="username"
+                        data-testid={TEXTFIELD_USERNAME_DATA_TESTID}
                         fullWidth
                         margin="dense"
-                        name="username"
-                        label="Username"
+                        name={TEXTFIELD_USERNAME_NAME}
+                        label={TEXTFIELD_USERNAME_LABEL}
                         value={formData.username?.trim()}
                         onChange={handleChange}
-                        onBlur={() => handleBlur('username')}
+                        onBlur={() => handleBlur(TEXTFIELD_USERNAME_NAME)}
                         error={touched.username && Boolean(errors.username)}
                         helperText={touched.username && errors.username}
                     />
                     <TextField
-                        data-testid="fullName"
+                        data-testid={TEXTFIELD_FULLNAME_DATA_TESTID}
                         fullWidth
                         margin="dense"
-                        name="fullName"
-                        label="Full Name"
+                        name={TEXTFIELD_FULLNAME_NAME}
+                        label={TEXTFIELD_FULLNAME_LABEL}
                         value={formData.fullName}
                         onChange={handleChange}
-                        onBlur={() => handleBlur('fullName')}
+                        onBlur={() => handleBlur(TEXTFIELD_FULLNAME_NAME)}
                         error={touched.fullName && Boolean(errors.fullName)}
                         helperText={touched.fullName && errors.fullName}
                     />
                     <TextField
-                        data-testid="email"
+                        data-testid={TEXTFIELD_EMAIL_DATA_TESTID}
                         fullWidth
                         margin="dense"
-                        name="email"
-                        label="Email"
+                        name={TEXTFIELD_EMAIL_NAME}
+                        label={TEXTFIELD_EMAIL_LABEL}
                         value={formData.email?.trim()}
                         onChange={handleChange}
-                        onBlur={() => handleBlur('email')}
+                        onBlur={() => handleBlur(TEXTFIELD_EMAIL_NAME)}
                         error={touched.email && Boolean(errors.email)}
                         helperText={touched.email && errors.email}
                     />
                     <FormControl fullWidth margin="dense">
                         <InputLabel
-                            id="role-label"
+                            id={SELECT_ROLE_LABEL_ID}
                             disabled
                         >
-                            Select Role
+                            {SELECT_ROLE_TITLE}
                         </InputLabel>
                         <Select
-                            data-testid="role"
-                            labelId="role-label"
-                            label="Select Role"
-                            name="role"
+                            data-testid={SELECT_ROLE_DATA_TESTID}
+                            labelId={SELECT_ROLE_LABEL_ID}
+                            label={SELECT_ROLE_LABEL}
+                            name={SELECT_ROLE_NAME}
                             id="update-role"
                             value={formData.role}
-                            onChange={(e) => handleSelectChange('role', e.target.value)}
-                            onBlur={() => handleBlur('role')}
+                            onChange={(e) => handleSelectChange(SELECT_ROLE_NAME, e.target.value)}
+                            onBlur={() => handleBlur(SELECT_ROLE_NAME)}
                             error={touched.role && Boolean(errors.role)}
                         >
                             {Object.entries(ROLE_OPTIONS).map(([value, label]) => (
@@ -171,18 +172,22 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose} disabled={isLoading} data-testid="close-update-user-dialog">
-                        Cancel
+                    <Button
+                        onClick={onClose}
+                        disabled={isLoading}
+                        data-testid={BUTTON_CANCEL_UPDATE_USER_DATA_TEST_ID}
+                    >
+                        {BUTTON_CANCEL_UPDATE_USER_TEXT}
                     </Button>
                     <ButtonLoading
                         type="submit"
-                        buttonText="Update User"
+                        buttonText={BUTTON_SUBMIT_UPDATE_USER_TEXT}
                         isLoading={isLoading}
                         fullWidth
                         disabled={isLoading}
                         variant="contained"
                         size="large"
-                        data-testid="submit-update-user-form"
+                        data-testid={BUTTON_SUBMIT_UPDATE_USER_DATA_TEST_ID}
                     />
                 </DialogActions>
             </Box>
@@ -190,4 +195,4 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
     );
 };
 
-export default UpdateUserDialogComponent;
+export default memo(UpdateUserDialogComponent);
