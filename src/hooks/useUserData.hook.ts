@@ -4,22 +4,23 @@ import { IUser } from '../types/user.type';
 import { useSearch } from './useSearch.hook';
 import { SearchParams } from '../pages/user-management-page/types/search.type';
 import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/user-management-page/services/user.service';
+import { CREATING_USER_ERROR, CREATING_USER_SUCCESS, FETCHING_DATA_ERROR, FETCHING_USER_DETAILS_ERROR, REMOVING_USER_ERROR, REMOVING_USER_SUCCESS, UPDATING_USER_ERROR, UPDATING_USER_SUCCESS } from './constant';
 
 
 export const useUserData = () => {
     const [data, setData] = useState<IUser[]>([]);
-    const [total, setTotal] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(20);
+    const [total, setTotal] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(1);
+    const [limit, setLimit] = useState<number>(20);
     const [search, setSearch] = useState<string>("");
     const [selectedUser, setSelectedUser] = useState<string | null>(null);
     const [isCreateUserDialog, setIsCreateUserDialog] = useState<boolean>(false);
 
     // dialog remove user
-    const [openRemoveUserDialog, setOpenRemoveUserDialog] = useState(false);
+    const [openRemoveUserDialog, setOpenRemoveUserDialog] = useState<boolean>(false);
     // dialog update user
-    const [openUpdateUserDialog, setOpenUpdateUserDialog] = useState(false);
+    const [openUpdateUserDialog, setOpenUpdateUserDialog] = useState<boolean>(false);
 
     const fetchUserData = useCallback(async ({ page, limit, search }: GetAllUsersParamsType) => {
         setIsLoading(true);
@@ -28,7 +29,7 @@ export const useUserData = () => {
             setData(response.data);
             setTotal(response.total);
         } catch (err) {
-            console.error("Error fetching user data:", err);
+            console.error(`${FETCHING_DATA_ERROR}`, err);
         } finally {
             setIsLoading(false);
         }
@@ -39,7 +40,7 @@ export const useUserData = () => {
         try {
             return await getUserById(userId);
         } catch (error) {
-            console.error('Error fetching user details:', error);
+            console.error(`${FETCHING_USER_DETAILS_ERROR}`, error);
             throw error;
         } finally {
             setIsLoading(false);
@@ -50,9 +51,9 @@ export const useUserData = () => {
         setIsLoading(true);
         try {
             await createUser(user);
-            window.alert('User created successfully');
+            window.alert(`${CREATING_USER_SUCCESS}`);
         } catch (error) {
-            console.error('Error creating user:', error);
+            console.error(`${CREATING_USER_ERROR}`, error);
             throw error;
         } finally {
             setIsLoading(false);
@@ -63,9 +64,9 @@ export const useUserData = () => {
         setIsLoading(true);
         try {
             await updateUser(userId, user);
-            window.alert('User updated successfully');
+            window.alert(`${UPDATING_USER_SUCCESS}`);
         } catch (error) {
-            console.error('Error updating user:', error);
+            console.error(`${UPDATING_USER_ERROR}`, error);
             throw error;
         } finally {
             setIsLoading(false);
@@ -76,10 +77,10 @@ export const useUserData = () => {
         setIsLoading(true);
         try {
             await removeUser(userId);
-            window.alert('User removed successfully');
+            window.alert(`${REMOVING_USER_SUCCESS}`);
             handleReloadUserData();
         } catch (error) {
-            console.error('Error removing user:', error);
+            console.error(`${REMOVING_USER_ERROR}`, error);
             throw error;
         } finally {
             setIsLoading(false);
@@ -95,14 +96,14 @@ export const useUserData = () => {
     const handleChangePage = (
         _event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number
-    ) => {
+    ): void => {
         setPage(newPage + 1);
         fetchUserData({ page: newPage + 1, limit, search });
     };
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-    ) => {
+    ): void => {
         const newLimit = parseInt(event.target.value, 10);
         setLimit(newLimit || 20);
         setPage(1);
