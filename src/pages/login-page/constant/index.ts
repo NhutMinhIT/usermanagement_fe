@@ -2,14 +2,12 @@ export const LOGIN_TITLE: string = "Login";
 export const LOGIN_ERROR_MESSAGE: string = "Login failed.";
 
 // constant form login-page
-export const LOGIN_FORM_USERNAME: string = "Username";
 export const LOGIN_FORM_USERNAME_LABEL: string = "Username";
-export const LOGIN_FORM_USERNAME_NAME: string = "Password";
+export const LOGIN_FORM_USERNAME_NAME: string = "username";
 export const LOGIN_FORM_USERNAME_DATA_TESTID: string = "username";
 
-export const LOGIN_FORM_PASSWORD: string = "Password";
 export const LOGIN_FORM_PASSWORD_LABEL: string = "Password";
-export const LOGIN_FORM_PASSWORD_NAME: string = "Password";
+export const LOGIN_FORM_PASSWORD_NAME: string = "password";
 export const LOGIN_FORM_PASSWORD_DATA_TESTID: string = "password";
 
 // constant button login-page
