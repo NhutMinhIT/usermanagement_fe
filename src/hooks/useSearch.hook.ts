@@ -7,10 +7,10 @@ export const useSearch = <T extends { search?: string }>({
     delay = 300,
     searchParams = {} as Partial<T>
 }: UseSearchProps<T>) => {
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState<string>('');
 
     const debouncedSearch = useDebounce(
-        (value: string) => {
+        (value: string): void => {
             onSearch({
                 ...searchParams,
                 search: value || undefined
@@ -20,7 +20,7 @@ export const useSearch = <T extends { search?: string }>({
         [searchParams, onSearch] // Added missing dependencies array
     );
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value || '';
         setSearchValue(value);
         debouncedSearch(value);
