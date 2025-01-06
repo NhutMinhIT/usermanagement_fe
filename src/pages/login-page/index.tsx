@@ -9,6 +9,7 @@ import { Typography } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import { ILoginFormData } from "./types/login.type";
 import { validateLoginForm } from "./schema/login.schema";
+import { LOGIN_ERROR_MESSAGE, LOGIN_TITLE } from "./constant";
 
 const initialFormData = {
     username: "",
@@ -40,7 +41,7 @@ const LoginPage: React.FC = () => {
                 navigate(HOME_PAGE);
             }
         } catch (error) {
-            console.error("Error login:", error);
+            console.error(`${LOGIN_ERROR_MESSAGE}`, error);
         }
     }
 
@@ -55,7 +56,7 @@ const LoginPage: React.FC = () => {
                 gutterBottom
                 fontWeight="bold"
             >
-                Login
+                {LOGIN_TITLE}
             </Typography>
 
             <LoginForm

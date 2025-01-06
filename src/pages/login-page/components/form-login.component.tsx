@@ -4,6 +4,7 @@ import styles from "./modules/style.module.css";
 import { Link } from "react-router-dom";
 import ButtonLoading from "../../../components/Button/Button";
 import { ILoginFormData } from "../types/login.type";
+import { FORGOT_PASSWORD, LOGIN_BUTTON_REGISTER, LOGIN_BUTTON_SUBMIT, LOGIN_BUTTON_SUBMIT_DATA_TESTID, LOGIN_FORM_PASSWORD_DATA_TESTID, LOGIN_FORM_USERNAME_DATA_TESTID, LOGIN_FORM_USERNAME_LABEL, LOGIN_FORM_USERNAME_NAME } from "../constant";
 
 type LoginFormPropsType = {
     isLoading: boolean;
@@ -38,11 +39,11 @@ const LoginForm: FC<LoginFormPropsType> = ({
             className={styles.box__form__login}
         >
             <TextField
-                data-testid="username"
+                data-testid={LOGIN_FORM_USERNAME_DATA_TESTID}
                 fullWidth
                 variant="outlined"
-                label="Username"
-                name="username"
+                label={LOGIN_FORM_USERNAME_LABEL}
+                name={LOGIN_FORM_USERNAME_NAME}
                 value={formData.username}
                 onChange={handleChange}
                 onBlur={(e) => handleBlur && handleBlur(e)}
@@ -52,7 +53,7 @@ const LoginForm: FC<LoginFormPropsType> = ({
 
             <TextField
                 fullWidth
-                data-testid="password"
+                data-testid={LOGIN_FORM_PASSWORD_DATA_TESTID}
                 variant="outlined"
                 label="Password"
                 name="password"
@@ -67,22 +68,22 @@ const LoginForm: FC<LoginFormPropsType> = ({
             <ButtonLoading
                 size="large"
                 isLoading={isLoading}
-                buttonText="Login"
+                buttonText={LOGIN_BUTTON_SUBMIT}
                 variant="contained"
                 fullWidth
                 className={styles.login__button}
                 onClick={handleSubmit}
-                data-testid="login-button"
+                data-testid={LOGIN_BUTTON_SUBMIT_DATA_TESTID}
             />
             <Box sx={{ mt: 2, textAlign: 'center' }}>
                 <Link
                     to={'#'}
                 >
-                    Forgot Password?
+                    {FORGOT_PASSWORD}
                 </Link>
                 <Box mt={1}>
                     <Link to="#">
-                        Don't have an account? Sign Up
+                        {LOGIN_BUTTON_REGISTER}
                     </Link>
                 </Box>
             </Box>
