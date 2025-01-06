@@ -53,3 +53,20 @@ export const BUTTON_SUBMIT_UPDATE_USER_TEXT: string = 'Update User';
 
 export const BUTTON_CANCEL_UPDATE_USER_DATA_TEST_ID: string = 'close-update-user-form';
 export const BUTTON_CANCEL_UPDATE_USER_TEXT: string = 'Cancel';
+
+//validation error messages
+export const ERROR_USERNAME_REQUIRED: string = 'Username is required';
+export const ERROR_USERNAME_MIN_LENGTH: string = 'Username must be at least 3 characters';
+export const ERROR_USERNAME_MAX_LENGTH: string = 'Username must not exceed 50 characters';
+
+export const ERROR_FULLNAME_REQUIRED: string = 'Full name is required';
+export const ERROR_FULLNAME_MIN_LENGTH: string = 'Full name must be at least 2 characters';
+export const ERROR_FULLNAME_MAX_LENGTH: string = 'Full name must not exceed 50 characters';
+
+export const ERROR_EMAIL_REQUIRED: string = 'Email is required';
+export const ERROR_EMAIL_INVALID_FORMAT: string = 'Invalid email format';
+export const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+export const VALID_ROLES: string[] = ['admin', 'manager', 'staff', 'user'];
+export const ERROR_ROLE_REQUIRED: string = 'Role is required';
+export const ERROR_INVALID_ROLE: string = 'Invalid role';   
