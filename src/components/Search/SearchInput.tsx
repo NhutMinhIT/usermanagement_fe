@@ -1,5 +1,5 @@
+import { TextField } from '@mui/material';
 import React from 'react';
-import InputField from '../InputField/InputField';
 
 interface SearchInputProps {
     onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,7 +13,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
     value
 }) => {
     return (
-        <InputField
+        <TextField
             onChange={onSearch}
             placeholder={placeholder}
             value={value}

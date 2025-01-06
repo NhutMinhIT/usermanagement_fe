@@ -1,7 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { FC } from "react";
 import styles from "./modules/style.module.css";
-import InputField from "../../../components/InputField/InputField";
 import { Link } from "react-router-dom";
 import ButtonLoading from "../../../components/Button/Button";
 import { ILoginFormData } from "../types/login.type";
@@ -38,7 +37,7 @@ const LoginForm: FC<LoginFormPropsType> = ({
             component={"form"}
             className={styles.box__form__login}
         >
-            <InputField
+            <TextField
                 data-testid="username"
                 fullWidth
                 variant="outlined"
@@ -51,7 +50,7 @@ const LoginForm: FC<LoginFormPropsType> = ({
                 helperText={error.username}
             />
 
-            <InputField
+            <TextField
                 fullWidth
                 data-testid="password"
                 variant="outlined"

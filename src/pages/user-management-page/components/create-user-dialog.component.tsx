@@ -1,10 +1,9 @@
 import { FC, FormEvent } from "react";
-import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useForm } from "../../../hooks/useForm";
 import { validateUserForm } from '../schemas/create-user-schema';
 import { ICreateUser } from "../types/user-managment.type";
 import { ROLE_OPTIONS } from "../../../constants/role.constant";
-import InputField from "../../../components/InputField/InputField";
 import ButtonLoading from "../../../components/Button/Button";
 import Transition from "../../../components/Dialog/dialog-transition";
 import styles from './module/style.module.css';
@@ -69,7 +68,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                     onSubmit={onSubmit}
                     className={styles.form__create__user}
                 >
-                    <InputField
+                    <TextField
                         data-testid="username"
                         fullWidth
                         name="username"
@@ -80,7 +79,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         error={touched.username && Boolean(errors.username)}
                         helperText={touched.username && errors.username}
                     />
-                    <InputField
+                    <TextField
                         data-testid="fullName"
                         fullWidth
                         name="fullName"
@@ -91,7 +90,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         error={touched.fullName && Boolean(errors.fullName)}
                         helperText={touched.fullName && errors.fullName}
                     />
-                    <InputField
+                    <TextField
                         data-testid="email"
                         fullWidth
                         name="email"
@@ -102,7 +101,7 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         error={touched.email && Boolean(errors.email)}
                         helperText={touched.email && errors.email}
                     />
-                    <InputField
+                    <TextField
                         data-testid="password"
                         fullWidth
                         name="password"
