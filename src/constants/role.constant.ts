@@ -1,6 +1,8 @@
-export const ROLE_OPTIONS = [
-    { value: 'admin', label: 'Admin' },
-    { value: 'manager', label: 'Manager' },
-    { value: 'staff', label: 'Staff' },
-    { value: 'user', label: 'User' }
-] as const;
+type TRole = 'admin' | 'manager' | 'staff' | 'user';
+
+export const ROLE_OPTIONS: Record<TRole, string> = {
+    admin: 'Admin',
+    manager: 'Manager',
+    staff: 'Staff',
+    user: 'User'
+};

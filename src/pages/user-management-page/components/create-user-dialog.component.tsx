@@ -128,9 +128,9 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                             onBlur={() => handleBlur('role')}
                             error={touched.role && Boolean(errors.role)}
                         >
-                            {ROLE_OPTIONS.map((option) => (
-                                <MenuItem key={option.value} value={option.value} data-testid={option.value}>
-                                    {option.label}
+                            {Object.entries(ROLE_OPTIONS).map(([value, label]) => (
+                                <MenuItem key={value} value={value} data-testid={value}>
+                                    {label}
                                 </MenuItem>
                             ))}
                         </Select>
