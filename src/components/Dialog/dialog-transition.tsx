@@ -1,6 +1,6 @@
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import React from "react";
+import React, { memo } from "react";
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -11,4 +11,4 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default Transition;
+export default memo(Transition);

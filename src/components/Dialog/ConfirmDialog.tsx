@@ -1,7 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
-import Transition from "../../pages/user-management-page/components/module/dialog-transition"
-import { FC } from "react";
+import Transition from "./dialog-transition"
+import { FC, memo } from "react";
 import ButtonLoading from "../Button/Button";
+import { DIALOG_CANCEL_BUTTON_TEXT, DIALOG_CONFIRM_BUTTON_TEXT } from "./constant";
 
 type ConfirmDialogProps = {
     title: string;
@@ -34,18 +35,18 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
                     color="primary"
                     variant="outlined"
                     isLoading={isLoading}
-                    buttonText="Confirm"
+                    buttonText={DIALOG_CONFIRM_BUTTON_TEXT}
                 />
                 <Button
                     onClick={onClose}
                     color="error"
                     variant="contained"
                 >
-                    Cancel
+                    {DIALOG_CANCEL_BUTTON_TEXT}
                 </Button>
             </DialogActions>
         </Dialog>
     )
 }
 
-export default ConfirmDialog
+export default memo(ConfirmDialog);

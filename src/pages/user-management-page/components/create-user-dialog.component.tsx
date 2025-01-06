@@ -6,7 +6,7 @@ import { ICreateUser } from "../types/user-managment.type";
 import { ROLE_OPTIONS } from "../../../constants/role.constant";
 import InputField from "../../../components/InputField/InputField";
 import ButtonLoading from "../../../components/Button/Button";
-import Transition from "./module/dialog-transition";
+import Transition from "../../../components/Dialog/dialog-transition";
 import styles from './module/style.module.css';
 import { useUserData } from "../../../hooks/useUserData.hook";
 
