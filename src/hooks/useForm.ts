@@ -4,21 +4,21 @@ export const useForm = <T extends Record<string, any>>(
     initialFormData: T,
     validateForm: (formData: T) => Record<string, string>
 ) => {
-    const [formData, setFormData] = useState(initialFormData);
+    const [formData, setFormData] = useState<T>(initialFormData);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [touched, setTouched] = useState<Record<string, boolean>>({});
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSelectChange = (name: string, value: string | number) => {
+    const handleSelectChange = (name: string, value: string | number): void => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleBlur = (field: string) => {
+    const handleBlur = (field: string): void => {
         setTouched((prev) => ({ ...prev, [field]: true }));
         const validationErrors = validateForm(formData);
         setErrors(validationErrors);
