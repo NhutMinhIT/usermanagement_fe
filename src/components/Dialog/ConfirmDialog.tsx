@@ -1,8 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
-import Transition from "./dialog-transition"
 import { FC, memo } from "react";
 import ButtonLoading from "../Button/Button";
 import { DIALOG_CANCEL_BUTTON_TEXT, DIALOG_CONFIRM_BUTTON_TEXT } from "./constant";
+import DialogTransition from "./DialogTransition";
 
 type TConfirmDialogProps = {
     title: string;
@@ -23,7 +23,7 @@ const ConfirmDialog: FC<TConfirmDialogProps> = ({
         <Dialog
             open={isOpen}
             onClose={onClose}
-            TransitionComponent={Transition}
+            TransitionComponent={DialogTransition}
             fullWidth
         >
             <DialogTitle>{title}</DialogTitle>

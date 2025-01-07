@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback, useContext } from "react";
-import { ILoginResponse } from "./types/auth.type";
-import { LOGIN_API } from "../../constants/api.constant";
+import { ILoginResponse } from "./types/authType";
+import { LOGIN_API } from "../../constants/apiConstant";
 import axios from "axios";
 import { getLocalStorageData, removeLocalStorageData, removeLocalStorageToken, setLocalStorageData, setLocalStorageToken } from "../../utils/localStorage";
 
