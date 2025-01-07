@@ -124,7 +124,8 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
         >
             <DialogTitle>{DIALOG_UPDATE_USER_TITLE}</DialogTitle>
             <DialogContent>
-                <Box component={"form"}
+                <Box
+                    component={"form"}
                     className={styles.form__update__user}
                     onSubmit={onSubmit}
                 >
