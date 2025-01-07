@@ -1,5 +1,5 @@
 import { Button, CircularProgress, ButtonProps } from "@mui/material";
-import React from "react";
+import React, { memo } from "react";
 
 interface ICustomButtonProps extends ButtonProps {
     isLoading: boolean;
@@ -26,4 +26,4 @@ const ButtonLoading: React.FC<ICustomButtonProps> = ({
     );
 };
 
-export default ButtonLoading;
+export default memo(ButtonLoading);

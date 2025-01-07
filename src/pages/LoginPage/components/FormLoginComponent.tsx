@@ -2,7 +2,6 @@ import { Box, TextField } from "@mui/material";
 import { FC, memo } from "react";
 import styles from "./modules/style.module.css";
 import { Link } from "react-router-dom";
-import ButtonLoading from "../../../components/Button/Button";
 import {
     FORGOT_PASSWORD,
     LOGIN_BUTTON_REGISTER,
@@ -16,6 +15,7 @@ import {
     LOGIN_FORM_USERNAME_NAME
 } from "../constant";
 import { ILoginFormData } from "../types/loginType";
+import { ButtonLoading } from "../../../components";
 
 type TLoginFormProps = {
     isLoading: boolean;

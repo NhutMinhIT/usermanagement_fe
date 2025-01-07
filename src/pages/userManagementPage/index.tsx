@@ -5,9 +5,9 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import UserListComponent from "./components/UserListComponent";
 import CreateUserDialog from "./components/CreateUserDialogComponent";
 import styles from "./components/module/style.module.css";
-import { SearchInput } from "../../components/Search/SearchInput";
 import { useUserData } from "../../hooks/useUserData.hook";
 import { CREATE_USER_BUTTON, RELOAD_USER_BUTTON, SEARCH_INPUT_PLACEHOLDER } from "./constant";
+import { SearchInput } from "../../components";
 
 const UserManagementPage = () => {
     const {

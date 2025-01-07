@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface ISearchInputProps {
     onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -7,8 +7,7 @@ interface ISearchInputProps {
     value?: string;
     className?: string;
 }
-
-export const SearchInput: React.FC<ISearchInputProps> = ({
+const SearchInput: React.FC<ISearchInputProps> = ({
     onSearch,
     placeholder = 'Search...',
     value,
@@ -23,3 +22,4 @@ export const SearchInput: React.FC<ISearchInputProps> = ({
         />
     );
 };
+export default memo(SearchInput);
