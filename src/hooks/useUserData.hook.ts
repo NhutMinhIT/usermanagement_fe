@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { GetAllUsersParamsType, ICreateUser, IUpdateUser } from '../pages/user-management-page/types/user-managment.type';
-import { IUser } from '../types/user.type';
+import { IUser } from '../types/UserType';
 import { useSearch } from './useSearch.hook';
 import { SearchParams } from '../pages/user-management-page/types/search.type';
 import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/user-management-page/services/user.service';

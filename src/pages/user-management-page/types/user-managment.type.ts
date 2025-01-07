@@ -1,4 +1,4 @@
-import { IUser } from "../../../types/user.type";
+import { IUser } from "../../../types/UserType";
 
 export type GetAllUsersParamsType = {
     page?: number;

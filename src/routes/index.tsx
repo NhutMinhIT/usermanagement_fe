@@ -4,7 +4,7 @@ import { HOME_PAGE, LOGIN_PAGE, ROOT_PAGE, USER_MANAGEMENT_PAGE } from "../const
 import { useAuth } from "../context/auth/auth.context";
 import UserManagementPage from "../pages/user-management-page";
 import HomePage from "../pages/home-page/home.page";
-import { EUserRole } from "../types/user.type";
+import { EUserRole } from "../types/UserType";
 
 const AppRoutes = () => {
     const { account } = useAuth();

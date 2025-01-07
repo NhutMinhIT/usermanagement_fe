@@ -18,7 +18,7 @@ import UpdateUserDialogComponent from './update-user-dialog.component';
 import { useUserData } from '../../../hooks/useUserData.hook';
 import styles from './module/style.module.css';
 import { rowHeaderMapping, StyledTableCell, StyledTableRow } from './module/table.';
-import { IUser } from '../../../types/user.type';
+import { IUser } from '../../../types/UserType';
 import { DIALOG_CONFIRM_REMOVE_USER_TITLE, NO_DATA_AVAILABLE, USER_LOADING } from '../constant';
 
 type UserListComponentProps = {
