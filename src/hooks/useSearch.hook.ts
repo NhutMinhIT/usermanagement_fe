@@ -19,12 +19,6 @@ export const useSearch = <T extends { search?: string }>({
         delay,
         [searchParams, onSearch] // Added missing dependencies array
     );
-
-    // const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    //     const value = e.target.value || '';
-    //     setSearchValue(value);
-    //     debouncedSearch(value);
-    // };
     const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value || '';
         setSearchValue(value);
