@@ -3,20 +3,36 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogActions,
     Button,
     TextField,
     MenuItem,
-    FormControl,
-    InputLabel,
-    Select,
     Box,
 } from "@mui/material";
 import { IUpdateUser } from "../types/userManagmentType";
 import { validateUpdateUser } from "../schemas/updateUserSchema";
 import { useUserData } from "../../../hooks/useUserData.hook";
 import { useForm } from "../../../hooks/useForm";
-import { BUTTON_CANCEL_UPDATE_USER_DATA_TEST_ID, BUTTON_CANCEL_UPDATE_USER_TEXT, BUTTON_SUBMIT_UPDATE_USER_DATA_TEST_ID, BUTTON_SUBMIT_UPDATE_USER_TEXT, DIALOG_UPDATE_USER_DATA_TEST_ID, DIALOG_UPDATE_USER_TITLE, SELECT_ROLE_DATA_TESTID, SELECT_ROLE_LABEL, SELECT_ROLE_LABEL_ID, SELECT_ROLE_NAME, SELECT_ROLE_TITLE, TEXTFIELD_EMAIL_DATA_TESTID, TEXTFIELD_EMAIL_LABEL, TEXTFIELD_EMAIL_NAME, TEXTFIELD_FULLNAME_DATA_TESTID, TEXTFIELD_FULLNAME_LABEL, TEXTFIELD_FULLNAME_NAME, TEXTFIELD_USERNAME_DATA_TESTID, TEXTFIELD_USERNAME_LABEL, TEXTFIELD_USERNAME_NAME, USER_LOADING } from "../constant";
+import {
+    BUTTON_CANCEL_UPDATE_USER_DATA_TEST_ID,
+    BUTTON_CANCEL_UPDATE_USER_TEXT,
+    BUTTON_SUBMIT_UPDATE_USER_DATA_TEST_ID,
+    BUTTON_SUBMIT_UPDATE_USER_TEXT,
+    DIALOG_UPDATE_USER_DATA_TEST_ID,
+    DIALOG_UPDATE_USER_TITLE,
+    SELECT_ROLE_DATA_TESTID,
+    SELECT_ROLE_NAME,
+    SELECT_ROLE_TITLE,
+    TEXTFIELD_EMAIL_DATA_TESTID,
+    TEXTFIELD_EMAIL_LABEL,
+    TEXTFIELD_EMAIL_NAME,
+    TEXTFIELD_FULLNAME_DATA_TESTID,
+    TEXTFIELD_FULLNAME_LABEL,
+    TEXTFIELD_FULLNAME_NAME,
+    TEXTFIELD_USERNAME_DATA_TESTID,
+    TEXTFIELD_USERNAME_LABEL,
+    TEXTFIELD_USERNAME_NAME,
+    USER_LOADING
+} from "../constant";
 import { ROLE_OPTIONS } from "../../../constants/roleConstant";
 import styles from "./module/style.module.css";
 import { ButtonLoading, DialogTransition } from "../../../components";
