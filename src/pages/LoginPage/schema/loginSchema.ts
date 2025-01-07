@@ -1,5 +1,5 @@
 import { LOGIN_FORM_PASSWORD_REQUIRED, LOGIN_FORM_USERNAME_REQUIRED } from "../constant";
-import { ILoginFormData } from "../types/login.type";
+import { ILoginFormData } from "../types/loginType";
 
 interface IValidationErrors {
     [key: string]: string;

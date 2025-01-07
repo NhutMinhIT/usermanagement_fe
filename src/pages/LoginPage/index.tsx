@@ -1,16 +1,15 @@
 import React, { FormEvent } from "react";
-import { useAuth } from "../../context/auth/auth.context";
 import { useNavigate } from "react-router-dom";
-import { HOME_PAGE, USER_MANAGEMENT_PAGE } from "../../constants/path.constant";
-import LoginForm from "./components/form-login.component";
 import styles from "./components/modules/style.module.css";
 import { EUserRole } from "../../types/userType";
 import { Typography } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
-import { ILoginFormData } from "./types/login.type";
-import { validateLoginForm } from "./schema/login.schema";
 import { LOGIN_ERROR_MESSAGE, LOGIN_TITLE } from "./constant";
-
+import { useAuth } from "../../context/auth/AuthContext";
+import { ILoginFormData } from "./types/loginType";
+import { validateLoginForm } from "./schema/loginSchema";
+import { HOME_PAGE, USER_MANAGEMENT_PAGE } from "../../constants/pathConstant";
+import LoginForm from "./components/FormLoginComponent";
 const initialFormData = {
     username: "",
     password: "",
