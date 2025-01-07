@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CREATE_USER_ENDPOINT, GET_ALL_USER_ENDPOINT, GET_USER_BY_ID_ENDPOINT, REMOVE_USER_ENDPOINT, UPDATE_USER_ENDPOINT } from "../../../constants/api.constant";
 import { getAuthHeaders } from "../../../utils/getAuthHeaders";
-import { GetAllUsersParamsType, ICreateUser, IUpdateUser } from "../types/user-managment.type";
+import { GetAllUsersParamsType, ICreateUser, IUpdateUser } from "../types/userManagmentType";
 
 
 export const getAllUsers = async ({ page = 1, limit = 5, search = "" }: GetAllUsersParamsType) => {

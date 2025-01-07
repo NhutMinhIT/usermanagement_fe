@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
-import { GetAllUsersParamsType, ICreateUser, IUpdateUser } from '../pages/user-management-page/types/user-managment.type';
-import { IUser } from '../types/UserType';
+import { IUser } from '../types/userType';
 import { useSearch } from './useSearch.hook';
-import { SearchParams } from '../pages/user-management-page/types/search.type';
-import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/user-management-page/services/user.service';
 import { CREATING_USER_ERROR, CREATING_USER_SUCCESS, FETCHING_DATA_ERROR, FETCHING_USER_DETAILS_ERROR, REMOVING_USER_ERROR, REMOVING_USER_SUCCESS, UPDATING_USER_ERROR, UPDATING_USER_SUCCESS } from './constant';
+import { ICreateUser, IUpdateUser, TGetAllUsersParams } from '../pages/userManagementPage/types/userManagmentType';
+import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/userManagementPage/services/userservice';
+import { ISearchParams } from '../pages/userManagementPage/types/searchType';
 
 
 export const useUserData = () => {
@@ -22,7 +22,7 @@ export const useUserData = () => {
     // dialog update user
     const [openUpdateUserDialog, setOpenUpdateUserDialog] = useState<boolean>(false);
 
-    const fetchUserData = useCallback(async ({ page, limit, search }: GetAllUsersParamsType) => {
+    const fetchUserData = useCallback(async ({ page, limit, search }: TGetAllUsersParams) => {
         setIsLoading(true);
         try {
             const response = await getAllUsers({ page, limit, search });
@@ -87,7 +87,7 @@ export const useUserData = () => {
         }
     };
 
-    const { handleSearchChange } = useSearch<SearchParams>({
+    const { handleSearchChange } = useSearch<ISearchParams>({
         onSearch: fetchUserData,
         searchParams: { page: 1, limit: 10 },
         delay: 500

@@ -1,8 +1,8 @@
 import { FC, FormEvent, memo } from "react";
 import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useForm } from "../../../hooks/useForm";
-import { validateUserForm } from '../schemas/create-user-schema';
-import { ICreateUser } from "../types/user-managment.type";
+import { validateUserForm } from '../schemas/createUserSchema';
+import { ICreateUser } from "../types/userManagmentType";
 import { ROLE_OPTIONS } from "../../../constants/role.constant";
 import ButtonLoading from "../../../components/Button/Button";
 import Transition from "../../../components/Dialog/dialog-transition";

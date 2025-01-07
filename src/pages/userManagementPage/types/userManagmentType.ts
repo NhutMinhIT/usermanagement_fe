@@ -1,6 +1,6 @@
-import { IUser } from "../../../types/UserType";
+import { IUser } from "../../../types/userType";
 
-export type GetAllUsersParamsType = {
+export type TGetAllUsersParams = {
     page?: number;
     limit?: number | string;
     search?: string;

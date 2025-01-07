@@ -13,12 +13,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import ConfirmDialog from '../../../components/Dialog/ConfirmDialog';
-import UpdateUserDialogComponent from './update-user-dialog.component';
+import UpdateUserDialogComponent from './UpdateUserDialogComponent';
 
 import { useUserData } from '../../../hooks/useUserData.hook';
 import styles from './module/style.module.css';
 import { rowHeaderMapping, StyledTableCell, StyledTableRow } from './module/table.';
-import { IUser } from '../../../types/UserType';
+import { IUser } from '../../../types/userType';
 import { DIALOG_CONFIRM_REMOVE_USER_TITLE, NO_DATA_AVAILABLE, USER_LOADING } from '../constant';
 
 type UserListComponentProps = {

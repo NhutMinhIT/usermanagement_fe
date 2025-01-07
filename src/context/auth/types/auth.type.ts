@@ -1,4 +1,4 @@
-import { IUser } from "../../../types/UserType";
+import { IUser } from "../../../types/userType";
 
 export interface ILoginResponse {
     user: IUser;

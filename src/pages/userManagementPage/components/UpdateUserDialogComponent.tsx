@@ -12,9 +12,9 @@ import {
     Select,
     Box,
 } from "@mui/material";
-import { IUpdateUser } from "../types/user-managment.type";
+import { IUpdateUser } from "../types/userManagmentType";
 import { ROLE_OPTIONS } from "../../../constants/role.constant";
-import { validateUpdateUser } from "../schemas/update-user-schema";
+import { validateUpdateUser } from "../schemas/updateUserSchema";
 import { useUserData } from "../../../hooks/useUserData.hook";
 import { useForm } from "../../../hooks/useForm";
 import ButtonLoading from "../../../components/Button/Button";
