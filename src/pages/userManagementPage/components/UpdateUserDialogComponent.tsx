@@ -19,7 +19,8 @@ import { useForm } from "../../../hooks/useForm";
 import ButtonLoading from "../../../components/Button/Button";
 import { BUTTON_CANCEL_UPDATE_USER_DATA_TEST_ID, BUTTON_CANCEL_UPDATE_USER_TEXT, BUTTON_SUBMIT_UPDATE_USER_DATA_TEST_ID, BUTTON_SUBMIT_UPDATE_USER_TEXT, DIALOG_UPDATE_USER_DATA_TEST_ID, DIALOG_UPDATE_USER_TITLE, SELECT_ROLE_DATA_TESTID, SELECT_ROLE_LABEL, SELECT_ROLE_LABEL_ID, SELECT_ROLE_NAME, SELECT_ROLE_TITLE, TEXTFIELD_EMAIL_DATA_TESTID, TEXTFIELD_EMAIL_LABEL, TEXTFIELD_EMAIL_NAME, TEXTFIELD_FULLNAME_DATA_TESTID, TEXTFIELD_FULLNAME_LABEL, TEXTFIELD_FULLNAME_NAME, TEXTFIELD_USERNAME_DATA_TESTID, TEXTFIELD_USERNAME_LABEL, TEXTFIELD_USERNAME_NAME, USER_LOADING } from "../constant";
 import { ROLE_OPTIONS } from "../../../constants/roleConstant";
-
+import styles from "./module/style.module.css";
+import DialogTransition from "../../../components/Dialog/DialogTransition";
 type UpdateUserDialogComponentProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -103,12 +104,16 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
         <Dialog
             open={isOpen}
             onClose={onClose}
-            maxWidth="sm"
+            data-testid={DIALOG_UPDATE_USER_DATA_TEST_ID}
             fullWidth
-            data-testid={DIALOG_UPDATE_USER_DATA_TEST_ID}>
+            TransitionComponent={DialogTransition}
+        >
             <DialogTitle>{DIALOG_UPDATE_USER_TITLE}</DialogTitle>
-            <Box component={"form"} onSubmit={onSubmit}>
-                <DialogContent>
+            <DialogContent>
+                <Box component={"form"}
+                    className={styles.form__update__user}
+                    onSubmit={onSubmit}
+                >
                     <TextField
                         data-testid={TEXTFIELD_USERNAME_DATA_TESTID}
                         fullWidth
@@ -145,40 +150,26 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         error={touched.email && Boolean(errors.email)}
                         helperText={touched.email && errors.email}
                     />
-                    <FormControl fullWidth margin="dense">
-                        <InputLabel
-                            id={SELECT_ROLE_LABEL_ID}
-                            disabled
-                        >
-                            {SELECT_ROLE_TITLE}
-                        </InputLabel>
-                        <Select
-                            data-testid={SELECT_ROLE_DATA_TESTID}
-                            labelId={SELECT_ROLE_LABEL_ID}
-                            label={SELECT_ROLE_LABEL}
-                            name={SELECT_ROLE_NAME}
-                            id="update-role"
-                            value={formData.role}
-                            onChange={(e) => handleSelectChange(SELECT_ROLE_NAME, e.target.value)}
-                            onBlur={() => handleBlur(SELECT_ROLE_NAME)}
-                            error={touched.role && Boolean(errors.role)}
-                        >
-                            {Object.entries(ROLE_OPTIONS).map(([value, label]) => (
-                                <MenuItem key={value} value={value} data-testid={value}>
-                                    {label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={onClose}
-                        disabled={isLoading}
-                        data-testid={BUTTON_CANCEL_UPDATE_USER_DATA_TEST_ID}
+
+                    <TextField
+                        data-testid={SELECT_ROLE_DATA_TESTID}
+                        id="update-role"
+                        select
+                        label={SELECT_ROLE_TITLE}
+                        value={formData.role}
+                        onChange={(e) => handleSelectChange(SELECT_ROLE_NAME, e.target.value)}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        error={touched.role && Boolean(errors.role)}
+                        helperText={touched.role && errors.role}
                     >
-                        {BUTTON_CANCEL_UPDATE_USER_TEXT}
-                    </Button>
+                        {Object.entries(ROLE_OPTIONS).map(([value, label]) => (
+                            <MenuItem key={value} value={value} data-testid={value}>
+                                {label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <ButtonLoading
                         type="submit"
                         buttonText={BUTTON_SUBMIT_UPDATE_USER_TEXT}
@@ -188,9 +179,23 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
                         variant="contained"
                         size="large"
                         data-testid={BUTTON_SUBMIT_UPDATE_USER_DATA_TEST_ID}
+                        classes={styles.btn__update_user}
                     />
-                </DialogActions>
-            </Box>
+                    <Button
+                        onClick={onClose}
+                        disabled={isLoading}
+                        data-testid={BUTTON_CANCEL_UPDATE_USER_DATA_TEST_ID}
+                        size="large"
+                        variant="contained"
+                        color="error"
+                        fullWidth
+                        classes={styles.btn__cancel_update_user}
+                    >
+                        {BUTTON_CANCEL_UPDATE_USER_TEXT}
+                    </Button>
+                </Box>
+
+            </DialogContent>
         </Dialog>
     );
 };

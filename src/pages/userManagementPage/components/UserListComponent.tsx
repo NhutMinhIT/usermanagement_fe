@@ -56,8 +56,8 @@ const UserListComponent: FC<UserListComponentProps> = ({
     return (
         <>
             <TableContainer
-                className={styles.table__container}>
-                <Table sx={{ maxWidth: '80%' }}>
+            >
+                <Table>
                     <TableHead>
                         <TableRow>
                             {rowHeaderMapping.map((header) => (

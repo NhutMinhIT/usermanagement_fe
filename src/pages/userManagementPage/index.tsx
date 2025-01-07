@@ -34,28 +34,27 @@ const UserManagementPage = () => {
     return (
         <Stack spacing={2} className={styles.usermanagement__page}>
             <div className={styles.search__container}>
-                <div className={styles.search__input}>
-                    <SearchInput
-                        onSearch={handleSearchChange}
-                        placeholder={SEARCH_INPUT_PLACEHOLDER}
-                    />
-                </div>
+                <SearchInput
+                    className={styles.search__input}
+                    onSearch={handleSearchChange}
+                    placeholder={SEARCH_INPUT_PLACEHOLDER}
+                />
                 <Button
-                    className="btn__add-user"
+                    className={styles.btn__adduser}
                     variant="outlined"
                     color="success"
                     onClick={handleOpenUserDialog}
                 >
-                    <AddCircleIcon color="success" fontSize="large" />
+                    <AddCircleIcon color="success" fontSize="medium" />
                     {CREATE_USER_BUTTON}
                 </Button>
                 <Button
-                    className="btn__reload-user"
+                    className={styles.btn__reload}
                     variant="outlined"
                     color="info"
                     onClick={handleReloadUserData}
                 >
-                    <ReplayIcon color="info" fontSize="large" />
+                    <ReplayIcon color="info" fontSize="medium" />
                     {RELOAD_USER_BUTTON}
                 </Button>
             </div>

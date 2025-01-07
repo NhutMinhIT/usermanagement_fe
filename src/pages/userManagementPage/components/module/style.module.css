@@ -1,49 +1,42 @@
 .usermanagement__page {
     margin-top: 10px;
     padding: 20px;
-    align-items: start;
-    justify-content: start;
-    margin: auto;
-
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
 }
 
-.table__container {
-    flex-direction: column;
-
-}
 
 .search__container {
     width: 100%;
     display: flex;
     gap: 2rem;
-    align-items: center;
 }
 
 .search__input {
-    width: 100%;
-    max-width: 500px;
+    min-width: 24rem;
 }
 
 .search__input input {
-    width: 100%;
-    height: 48px;
     font-size: 16px;
-    padding: 8px 16px;
+    padding: 10px;
 }
 
-.btn__add-user {
-    padding: 10px 20px;
-    background-color: #007bff;
-    height: 48px;
+.btn__adduser, .btn__reload {
+    align-items: center;
+    gap: 5px;
 }
 
-.button__create__user {
+.button__create__user,
+.button__cancel__create__user,
+.btn__update_user,
+.btn__cancel_update_user {
     padding: 10px 0px 10px 0px !important;
-    background-color: #007bff;
-    margin-top: 2rem !important;
 }
 
-.form__create__user {
+.form__create__user,
+.form__update__user {
     margin-top: 1rem;
     width: 100%;
     display: flex;

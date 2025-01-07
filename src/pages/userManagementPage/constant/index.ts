@@ -1,6 +1,6 @@
 export const SEARCH_INPUT_PLACEHOLDER: string = 'Search....';
 export const CREATE_USER_BUTTON: string = 'Add';
-export const RELOAD_USER_BUTTON: string = 'Reload Data';
+export const RELOAD_USER_BUTTON: string = 'Reload';
 
 // user management component
 export const USER_LOADING: string = 'Loading...';

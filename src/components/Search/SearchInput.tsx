@@ -5,18 +5,21 @@ interface ISearchInputProps {
     onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
     value?: string;
+    className?: string;
 }
 
 export const SearchInput: React.FC<ISearchInputProps> = ({
     onSearch,
     placeholder = 'Search...',
-    value
+    value,
+    className
 }) => {
     return (
         <TextField
             onChange={onSearch}
             placeholder={placeholder}
             value={value}
+            className={className}
         />
     );
 };

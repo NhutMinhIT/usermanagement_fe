@@ -47,6 +47,9 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                 handleReloadUserData();
             } catch (error) {
                 window.alert('Failed to create user. Please try again.');
+                setFormData(initialFormData);
+            } finally {
+                setFormData(initialFormData);
             }
         });
     };
@@ -58,12 +61,10 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
             onClose={onClose}
             TransitionComponent={DialogTransition}
             fullWidth
-            className={styles.create__user__dialog}
         >
             <DialogTitle>{DIALOG_CREATE_USER_TITLE}</DialogTitle>
             <DialogContent>
                 <Box
-                    data-testid="test"
                     component="form"
                     onSubmit={onSubmit}
                     className={styles.form__create__user}
@@ -113,27 +114,25 @@ const CreateUserDialog: FC<CreateUserDialogProps> = ({ isOpen, onClose, handleRe
                         error={touched.password && Boolean(errors.password)}
                         helperText={touched.password && errors.password}
                     />
-                    <FormControl fullWidth required
+                    <TextField
+                        data-testid={SELECT_ROLE_DATA_TESTID}
+                        id={SELECT_ROLE_LABEL_ID}
+                        select
+                        label={SELECT_ROLE_TITLE}
+                        value={formData.role}
+                        onChange={(e) => handleSelectChange(SELECT_ROLE_NAME, e.target.value)}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        error={touched.role && Boolean(errors.role)}
+                        helperText={touched.role && errors.role}
                     >
-                        <InputLabel id={SELECT_ROLE_LABEL_ID}>{SELECT_ROLE_TITLE}</InputLabel>
-                        <Select
-                            id="role"
-                            data-testid={SELECT_ROLE_DATA_TESTID}
-                            labelId={SELECT_ROLE_LABEL_ID}
-                            label={SELECT_ROLE_LABEL}
-                            name={SELECT_ROLE_NAME}
-                            value={formData.role}
-                            onChange={(e) => handleSelectChange(SELECT_ROLE_NAME, e.target.value)}
-                            onBlur={() => handleBlur(SELECT_ROLE_NAME)}
-                            error={touched.role && Boolean(errors.role)}
-                        >
-                            {Object.entries(ROLE_OPTIONS).map(([value, label]) => (
-                                <MenuItem key={value} value={value} data-testid={value}>
-                                    {label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                        {Object.entries(ROLE_OPTIONS).map(([value, label]) => (
+                            <MenuItem key={value} value={value} data-testid={value}>
+                                {label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <ButtonLoading
                         type="submit"
                         buttonText={BUTTON_SUBMIT_CREATE_USER_TEXT}
