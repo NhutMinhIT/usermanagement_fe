@@ -7,6 +7,7 @@ import {
     TablePagination,
     TableRow,
     IconButton,
+    Paper,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -51,11 +52,10 @@ const UserListComponent: FC<UserListComponentProps> = ({
 
     return (
         <>
-            <TableContainer
-            >
+            <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
-                        <TableRow>
+                        <TableRow hover>
                             {rowHeaderMapping.map((header) => (
                                 <StyledTableCell key={header.key}>{header.label}</StyledTableCell>
                             ))}
