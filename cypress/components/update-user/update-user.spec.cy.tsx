@@ -1,15 +1,12 @@
 import { ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { UserProvider } from "../../../src/pages/user-management-page/context/user-management.context";
 import UpdateUserDialogComponent from "../../../src/pages/user-management-page/components/update-user-dialog.component";
 import { mount } from "cypress/react";
 import { API_URL } from "../../../src/constants/api.constant";
 
 const UpdateUserWrapper = ({ children }: { children: ReactNode }) => (
     <BrowserRouter>
-        <UserProvider>
-            {children}
-        </UserProvider>
+        {children}
     </BrowserRouter>
 );
 describe("UpdateUserDialog", () => {

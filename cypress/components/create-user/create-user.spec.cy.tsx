@@ -1,16 +1,14 @@
 import { BrowserRouter } from "react-router-dom";
 import CreateUserDialog from "../../../src/pages/user-management-page/components/create-user-dialog.component";
 import { mount } from "cypress/react";
-import { UserProvider } from "../../../src/pages/user-management-page/context/user-management.context";
 import { ReactNode } from 'react';
 import { API_URL } from "../../../src/constants/api.constant";
+import { BUTTON_CANCEL_CREATE_USER_DATA_TEST_ID, BUTTON_SUBMIT_CREATE_USER_DATA_TEST_ID } from "../../../src/pages/user-management-page/constant";
 
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
     <BrowserRouter>
-        <UserProvider>
-            {children}
-        </UserProvider>
+        {children}
     </BrowserRouter>
 );
 
@@ -78,8 +76,8 @@ describe('CreateUserDialog', () => {
     // check render buttons
     it('should render the buttons', () => {
         mountCreateUserDialog();
-        cy.get('[data-testid="submit-create-user-form"]').should('exist');
-        cy.get('[data-testid="close-create-user-dialog"]').should('exist');
+        cy.get(`[data-testid=${BUTTON_SUBMIT_CREATE_USER_DATA_TEST_ID}]`).should('exist');
+        cy.get(`[data-testid=${BUTTON_CANCEL_CREATE_USER_DATA_TEST_ID}]`).should('exist');
     });
 
     // check render error
@@ -123,7 +121,7 @@ describe('CreateUserDialog', () => {
     //check open/close dialog
     it('should close the dialog', () => {
         mountCreateUserDialog();
-        cy.get('[data-testid="close-create-user-dialog"]').click();
+        cy.get(`[data-testid=${BUTTON_CANCEL_CREATE_USER_DATA_TEST_ID}]`).click();
     });
     it('should open the dialog', () => {
         mountCreateUserDialog();
@@ -145,9 +143,10 @@ describe('CreateUserDialog', () => {
         cy.get('[data-testid="password"]').type("Manager@123");
         cy.get('[data-testid="email"]').type("manager1@example.com");
         cy.get('[data-testid="fullName"]').type("Management");
-        cy.get('[id="role"]').click({ force: true });
-        cy.get('[data-testid="manager"]').should('be.visible').click({ force: true });
-        cy.get('[data-testid="submit-create-user-form"]').click();
+        cy.get('[data-testid="role"]', { withinSubject: null }).should('exist');
+        cy.get('[data-testid="role"]').click({ force: true });
+        cy.get('[data-testid="manager"]').click({ force: true });
+        cy.get(`[data-testid=${BUTTON_SUBMIT_CREATE_USER_DATA_TEST_ID}]`).click();
         cy.wait("@createUserRequest").its("response.statusCode").should("eq", 201);
     });
 
