@@ -7,6 +7,7 @@ import {
     TablePagination,
     TableRow,
     IconButton,
+    Box,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -54,7 +55,8 @@ const UserListComponent: FC<UserListComponentProps> = ({
 
     return (
         <>
-            <TableContainer className={styles.table__container}>
+            <TableContainer
+                className={styles.table__container}>
                 <Table sx={{ maxWidth: '80%' }}>
                     <TableHead>
                         <TableRow>
@@ -99,16 +101,15 @@ const UserListComponent: FC<UserListComponentProps> = ({
                             </StyledTableRow>
                         )}
                     </TableBody>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 20, 30]}
+                        count={total} // Total number of rows
+                        rowsPerPage={limit}
+                        page={page - 1} // Convert one-based page to zero-based
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
                 </Table>
-                <TablePagination
-                    rowsPerPageOptions={[5, 20, 30]}
-                    component="div"
-                    count={total} // Total number of rows
-                    rowsPerPage={limit}
-                    page={page - 1} // Convert one-based page to zero-based
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
             </TableContainer>
 
             {/* Remove User Dialog */}

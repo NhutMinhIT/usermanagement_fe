@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useCallback, useContext } fr
 import { ILoginResponse } from "./types/auth.type";
 import { LOGIN_API } from "../../constants/api.constant";
 import axios from "axios";
-import { getLocalStorageData, removeLocalStorageData, removeLocalStorageToken, setLocalStorageData, setLocalStorageToken } from "../../utils/local-storage.util";
+import { getLocalStorageData, removeLocalStorageData, removeLocalStorageToken, setLocalStorageData, setLocalStorageToken } from "../../utils/localStorage";
 
 // Define context props
 type AuthContextProps = {

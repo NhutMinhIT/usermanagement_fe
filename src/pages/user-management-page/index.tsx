@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Stack, Button } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import ReplayIcon from '@mui/icons-material/Replay';
 import UserListComponent from "./components/user-list.component";
 import CreateUserDialog from "./components/create-user-dialog.component";
 import styles from "./components/module/style.module.css";
@@ -54,6 +55,7 @@ const UserManagementPage = () => {
                     color="info"
                     onClick={handleReloadUserData}
                 >
+                    <ReplayIcon color="info" fontSize="large" />
                     {RELOAD_USER_BUTTON}
                 </Button>
             </div>

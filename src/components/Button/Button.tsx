@@ -1,12 +1,12 @@
 import { Button, CircularProgress, ButtonProps } from "@mui/material";
 import React from "react";
 
-interface CustomButtonProps extends ButtonProps {
+interface ICustomButtonProps extends ButtonProps {
     isLoading: boolean;
     buttonText?: string;
 }
 
-const ButtonLoading: React.FC<CustomButtonProps> = ({
+const ButtonLoading: React.FC<ICustomButtonProps> = ({
     isLoading,
     buttonText,
     className,

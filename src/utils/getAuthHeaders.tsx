@@ -1,4 +1,4 @@
-import { getLocalStorageToken } from "./local-storage.util";
+import { getLocalStorageToken } from "./localStorage";
 
 export const getAuthHeaders = () => {
     const token = getLocalStorageToken();
