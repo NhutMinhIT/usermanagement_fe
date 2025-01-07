@@ -1,10 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import LoginPage from "../pages/login-page";
-import { HOME_PAGE, LOGIN_PAGE, ROOT_PAGE, USER_MANAGEMENT_PAGE } from "../constants/path.constant";
-import { useAuth } from "../context/auth/auth.context";
-import UserManagementPage from "../pages/user-management-page";
-import HomePage from "../pages/home-page/home.page";
 import { EUserRole } from "../types/userType";
+import { useAuth } from "../context/auth/AuthContext";
+import { HOME_PAGE, LOGIN_PAGE, ROOT_PAGE, USER_MANAGEMENT_PAGE } from "../constants/pathConstant";
+import LoginPage from "../pages/LoginPage";
+import UserManagementPage from "../pages/UserManagementPage";
+import HomePage from "../pages/HomePage";
 
 const AppRoutes = () => {
     const { account } = useAuth();
