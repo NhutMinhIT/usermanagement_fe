@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { UseSearchProps } from '../pages/user-management-page/types/search.type';
+import { IUseSearchProps } from '../pages/UserManagementPage/types/searchType';
 import { useDebounce } from './useDebounce.hook';
 
 export const useSearch = <T extends { search?: string }>({
     onSearch,
     delay = 300,
     searchParams = {} as Partial<T>
-}: UseSearchProps<T>) => {
+}: IUseSearchProps<T>) => {
     const [searchValue, setSearchValue] = useState<string>('');
 
     const debouncedSearch = useDebounce(

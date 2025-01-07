@@ -2,9 +2,9 @@ import { useState, useCallback } from 'react';
 import { IUser } from '../types/userType';
 import { useSearch } from './useSearch.hook';
 import { CREATING_USER_ERROR, CREATING_USER_SUCCESS, FETCHING_DATA_ERROR, FETCHING_USER_DETAILS_ERROR, REMOVING_USER_ERROR, REMOVING_USER_SUCCESS, UPDATING_USER_ERROR, UPDATING_USER_SUCCESS } from './constant';
-import { ICreateUser, IUpdateUser, TGetAllUsersParams } from '../pages/userManagementPage/types/userManagmentType';
-import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/userManagementPage/services/userservice';
-import { ISearchParams } from '../pages/userManagementPage/types/searchType';
+import { ICreateUser, IUpdateUser, TGetAllUsersParams } from '../pages/UserManagementPage/types/userManagmentType';
+import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/UserManagementPage/services/userService';
+import { ISearchParams } from '../pages/UserManagementPage/types/searchType';
 
 
 export const useUserData = () => {
