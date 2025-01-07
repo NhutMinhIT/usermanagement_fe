@@ -6,7 +6,7 @@ import ButtonLoading from "../../../components/Button/Button";
 import { ILoginFormData } from "../types/login.type";
 import { FORGOT_PASSWORD, LOGIN_BUTTON_REGISTER, LOGIN_BUTTON_SUBMIT, LOGIN_BUTTON_SUBMIT_DATA_TESTID, LOGIN_FORM_PASSWORD_DATA_TESTID, LOGIN_FORM_USERNAME_DATA_TESTID, LOGIN_FORM_USERNAME_LABEL, LOGIN_FORM_USERNAME_NAME } from "../constant";
 
-type LoginFormPropsType = {
+type TLoginFormProps = {
     isLoading: boolean;
     formData: ILoginFormData;
     error: {
@@ -22,7 +22,7 @@ type LoginFormPropsType = {
     handleBlur?: (e: any) => void;
 };
 
-const LoginForm: FC<LoginFormPropsType> = ({
+const LoginForm: FC<TLoginFormProps> = ({
     isLoading,
     formData,
     error,

@@ -1,12 +1,12 @@
 import { LOGIN_FORM_PASSWORD_REQUIRED, LOGIN_FORM_USERNAME_REQUIRED } from "../constant";
 import { ILoginFormData } from "../types/login.type";
 
-interface ValidationErrors {
+interface IValidationErrors {
     [key: string]: string;
 }
 
-export const validateLoginForm = (data: ILoginFormData): ValidationErrors => {
-    const errors: ValidationErrors = {};
+export const validateLoginForm = (data: ILoginFormData): IValidationErrors => {
+    const errors: IValidationErrors = {};
 
     if (!data.username?.trim()) {
         errors.username = LOGIN_FORM_USERNAME_REQUIRED;
