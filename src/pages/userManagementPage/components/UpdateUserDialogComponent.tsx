@@ -53,7 +53,6 @@ const UpdateUserDialogComponent: FC<UpdateUserDialogComponentProps> = ({
         handleSelectChange,
         setFormData,
     } = useForm<IUpdateUser>(initialFormData, validateUpdateUser);
-
     useEffect(() => {
         if (!userId) return;
 
