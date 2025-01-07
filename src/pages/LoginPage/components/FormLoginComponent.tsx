@@ -10,6 +10,7 @@ import {
     LOGIN_BUTTON_SUBMIT_DATA_TESTID,
     LOGIN_FORM_PASSWORD_DATA_TESTID,
     LOGIN_FORM_PASSWORD_LABEL,
+    LOGIN_FORM_PASSWORD_NAME,
     LOGIN_FORM_USERNAME_DATA_TESTID,
     LOGIN_FORM_USERNAME_LABEL,
     LOGIN_FORM_USERNAME_NAME
@@ -66,7 +67,7 @@ const LoginForm: FC<TLoginFormProps> = ({
                 data-testid={LOGIN_FORM_PASSWORD_DATA_TESTID}
                 variant="outlined"
                 label={LOGIN_FORM_PASSWORD_LABEL}
-                name={LOGIN_FORM_USERNAME_NAME}
+                name={LOGIN_FORM_PASSWORD_NAME}
                 type="password"
                 value={formData.password}
                 onChange={handleChange}

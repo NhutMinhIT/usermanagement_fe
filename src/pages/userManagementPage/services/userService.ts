@@ -1,10 +1,10 @@
 import axios from "axios";
-import { CREATE_USER_ENDPOINT, GET_ALL_USER_ENDPOINT, GET_USER_BY_ID_ENDPOINT, REMOVE_USER_ENDPOINT, UPDATE_USER_ENDPOINT } from "../../../constants/api.constant";
+import { CREATE_USER_ENDPOINT, GET_ALL_USER_ENDPOINT, GET_USER_BY_ID_ENDPOINT, REMOVE_USER_ENDPOINT, UPDATE_USER_ENDPOINT } from "../../../constants/apiConstant";
 import { getAuthHeaders } from "../../../utils/getAuthHeaders";
-import { GetAllUsersParamsType, ICreateUser, IUpdateUser } from "../types/userManagmentType";
+import { ICreateUser, IUpdateUser, TGetAllUsersParams } from "../types/userManagmentType";
 
 
-export const getAllUsers = async ({ page = 1, limit = 5, search = "" }: GetAllUsersParamsType) => {
+export const getAllUsers = async ({ page = 1, limit = 5, search = "" }: TGetAllUsersParams) => {
     try {
         const params = new URLSearchParams({
             page: page.toString(),
