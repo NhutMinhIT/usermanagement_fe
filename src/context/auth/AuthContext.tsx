@@ -5,7 +5,7 @@ import axios from "axios";
 import { getLocalStorageData, removeLocalStorageData, removeLocalStorageToken, setLocalStorageData, setLocalStorageToken } from "../../utils/localStorage";
 
 // Define context props
-type AuthContextProps = {
+type TAuthContextProps = {
     account: ILoginResponse | null;
     isAuthenticated: boolean;
     login: (username: string, password: string) => Promise<ILoginResponse>;
@@ -13,7 +13,7 @@ type AuthContextProps = {
 }
 
 // Create context object
-export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthContext = createContext<TAuthContextProps | undefined>(undefined);
 
 // create provider component
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

@@ -4,7 +4,7 @@ import { FC, memo } from "react";
 import ButtonLoading from "../Button/Button";
 import { DIALOG_CANCEL_BUTTON_TEXT, DIALOG_CONFIRM_BUTTON_TEXT } from "./constant";
 
-type ConfirmDialogProps = {
+type TConfirmDialogProps = {
     title: string;
     isOpen: boolean;
     onClose: () => void;
@@ -12,7 +12,7 @@ type ConfirmDialogProps = {
     isLoading: boolean;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({
+const ConfirmDialog: FC<TConfirmDialogProps> = ({
     title,
     isOpen,
     onClose,
