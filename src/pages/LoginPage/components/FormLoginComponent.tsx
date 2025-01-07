@@ -4,7 +4,17 @@ import styles from "./modules/style.module.css";
 import { Link } from "react-router-dom";
 import ButtonLoading from "../../../components/Button/Button";
 import { ILoginFormData } from "../types/login.type";
-import { FORGOT_PASSWORD, LOGIN_BUTTON_REGISTER, LOGIN_BUTTON_SUBMIT, LOGIN_BUTTON_SUBMIT_DATA_TESTID, LOGIN_FORM_PASSWORD_DATA_TESTID, LOGIN_FORM_USERNAME_DATA_TESTID, LOGIN_FORM_USERNAME_LABEL, LOGIN_FORM_USERNAME_NAME } from "../constant";
+import {
+    FORGOT_PASSWORD,
+    LOGIN_BUTTON_REGISTER,
+    LOGIN_BUTTON_SUBMIT,
+    LOGIN_BUTTON_SUBMIT_DATA_TESTID,
+    LOGIN_FORM_PASSWORD_DATA_TESTID,
+    LOGIN_FORM_PASSWORD_LABEL,
+    LOGIN_FORM_USERNAME_DATA_TESTID,
+    LOGIN_FORM_USERNAME_LABEL,
+    LOGIN_FORM_USERNAME_NAME
+} from "../constant";
 
 type TLoginFormProps = {
     isLoading: boolean;
@@ -55,8 +65,8 @@ const LoginForm: FC<TLoginFormProps> = ({
                 fullWidth
                 data-testid={LOGIN_FORM_PASSWORD_DATA_TESTID}
                 variant="outlined"
-                label="Password"
-                name="password"
+                label={LOGIN_FORM_PASSWORD_LABEL}
+                name={LOGIN_FORM_USERNAME_NAME}
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
