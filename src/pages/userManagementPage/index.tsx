@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Stack, Button } from "@mui/material";
+import { Stack, Button, Box } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ReplayIcon from '@mui/icons-material/Replay';
 import UserListComponent from "./components/UserListComponent";
@@ -39,24 +39,31 @@ const UserManagementPage = () => {
                     onSearch={handleSearchChange}
                     placeholder={SEARCH_INPUT_PLACEHOLDER}
                 />
-                <Button
-                    className={styles.btn__adduser}
-                    variant="outlined"
-                    color="success"
-                    onClick={handleOpenUserDialog}
-                >
-                    <AddCircleIcon color="success" fontSize="medium" />
-                    {CREATE_USER_BUTTON}
-                </Button>
-                <Button
-                    className={styles.btn__reload}
-                    variant="outlined"
-                    color="info"
-                    onClick={handleReloadUserData}
-                >
-                    <ReplayIcon color="info" fontSize="medium" />
-                    {RELOAD_USER_BUTTON}
-                </Button>
+                <Box className={styles.btn__container}>
+                    <Button
+                        className={styles.btn__adduser}
+                        variant="outlined"
+                        color="success"
+                        title="Add User"
+                        onClick={handleOpenUserDialog}
+                    >
+                        <AddCircleIcon color="success" fontSize="medium" />
+                        <span>{CREATE_USER_BUTTON}</span>
+                    </Button>
+                    <Button
+                        className={styles.btn__reload}
+                        variant="outlined"
+                        color="info"
+                        title="Reload User Data"
+                        onClick={handleReloadUserData}
+                    >
+                        <ReplayIcon
+                            color="info"
+                            fontSize="medium"
+                        />
+                        <span>{RELOAD_USER_BUTTON}</span>
+                    </Button>
+                </Box>
             </div>
 
             <UserListComponent

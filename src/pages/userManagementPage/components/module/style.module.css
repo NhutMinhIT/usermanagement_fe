@@ -1,6 +1,6 @@
 .usermanagement__page {
     margin-top: 10px;
-    padding: 20px;
+    padding: 1.25rem;
     display: flex;
     align-items: center;
     width: 80%;
@@ -14,18 +14,22 @@
     gap: 2rem;
 }
 
-.search__input {
-    min-width: 24rem;
+.btn__container {
+    display: flex;
+    gap: 1rem;
 }
 
 .search__input input {
-    font-size: 16px;
-    padding: 10px;
+    font-size: 1rem;
+    padding: 1rem;
+    width: 20rem;
+
 }
 
 .btn__adduser, .btn__reload {
     align-items: center;
-    gap: 5px;
+    gap: 0.25rem;
+    width: auto;
 }
 
 .button__create__user,
@@ -47,6 +51,25 @@
 @media (max-width: 768px) {
     .search__input {
         max-width: 100%;
-        margin: 0 0 15px 0;
     }
+
+    .search_input input {
+        width: 100%;
+    }
+
+    .search__container {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .btn__adduser, .btn__reload {
+        width: 50%;
+        display: flex;
+        height: 3rem;
+    }
+
+    .btn__reload :nth-child(2), .btn__adduser :nth-child(2) {
+        display: none;
+    }
+
 }
