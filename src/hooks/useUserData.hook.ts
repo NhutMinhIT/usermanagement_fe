@@ -5,7 +5,7 @@ import { CREATING_USER_ERROR, CREATING_USER_SUCCESS, FETCHING_DATA_ERROR, FETCHI
 import { ICreateUser, IUpdateUser, TGetAllUsersParams } from '../pages/UserManagementPage/types/userManagmentType';
 import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/UserManagementPage/services/userService';
 import { ISearchParams } from '../pages/UserManagementPage/types/searchType';
-import { DELAY_DEBOUNCE_DEFAULT, LIMIT_NUMBER_DEFAULT, PAGE_NUMBER_DEFAULT, SEARCH_PARAMS_DEFAULT, SELECT_USER_DEFAULT, TOTAL_PAGE_NUMBER_DEFAULT } from './types';
+import { DELAY_DEBOUNCE_DEFAULT, LIMIT_NUMBER_DEFAULT, PAGE_NUMBER_DEFAULT, SEARCH_PARAMS_DEFAULT, SELECT_USER_DEFAULT, TOTAL_PAGE_NUMBER_DEFAULT } from './constant';
 
 
 export const useUserData = () => {

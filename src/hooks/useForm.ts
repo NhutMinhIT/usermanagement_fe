@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { VALIDATION_ERROR_LENGHT_DEFAULT } from './types';
+import { VALIDATION_ERROR_LENGHT_DEFAULT } from './constant';
 
 export const useForm = <T extends Record<string, any>>(
     initialFormData: T,
