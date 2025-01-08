@@ -57,11 +57,15 @@ export const BUTTON_CANCEL_UPDATE_USER_TEXT: string = 'Cancel';
 //validation error messages
 export const ERROR_USERNAME_REQUIRED: string = 'Username is required';
 export const ERROR_USERNAME_MIN_LENGTH: string = 'Username must be at least 3 characters';
+export const ERROR_USERNAME_MIN_LENGTH_NUMBER: number = 3;
 export const ERROR_USERNAME_MAX_LENGTH: string = 'Username must not exceed 50 characters';
+export const ERROR_USERNAME_MAX_LENGTH_NUMBER: number = 50;
 
 export const ERROR_FULLNAME_REQUIRED: string = 'Full name is required';
 export const ERROR_FULLNAME_MIN_LENGTH: string = 'Full name must be at least 2 characters';
+export const ERROR_FULLNAME_MIN_LENGTH_NUMBER: number = 2;
 export const ERROR_FULLNAME_MAX_LENGTH: string = 'Full name must not exceed 50 characters';
+export const ERROR_FULLNAME_MAX_LENGTH_NUMBER: number = 50;
 
 export const ERROR_EMAIL_REQUIRED: string = 'Email is required';
 export const ERROR_EMAIL_INVALID_FORMAT: string = 'Invalid email format';

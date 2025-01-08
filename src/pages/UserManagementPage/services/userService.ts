@@ -2,9 +2,10 @@ import axios from "axios";
 import { CREATE_USER_ENDPOINT, GET_ALL_USER_ENDPOINT, GET_USER_BY_ID_ENDPOINT, REMOVE_USER_ENDPOINT, UPDATE_USER_ENDPOINT } from "../../../constants/apiConstant";
 import { getAuthHeaders } from "../../../utils/getAuthHeaders";
 import { ICreateUser, IUpdateUser, TGetAllUsersParams } from "../types/userManagmentType";
+import { LIMIT_NUMBER_DEFAULT, PAGE_NUMBER_DEFAULT, SEARCH_PARAMS_DEFAULT } from "../../../hooks/constant";
 
 
-export const getAllUsers = async ({ page = 1, limit = 5, search = "" }: TGetAllUsersParams) => {
+export const getAllUsers = async ({ page = PAGE_NUMBER_DEFAULT, limit = LIMIT_NUMBER_DEFAULT, search = SEARCH_PARAMS_DEFAULT }: TGetAllUsersParams) => {
     try {
         const params = new URLSearchParams({
             page: page.toString(),

@@ -1,4 +1,4 @@
-import { EMAIL_REGEX, ERROR_EMAIL_INVALID_FORMAT, ERROR_EMAIL_REQUIRED, ERROR_FULLNAME_MAX_LENGTH, ERROR_FULLNAME_MIN_LENGTH, ERROR_FULLNAME_REQUIRED, ERROR_INVALID_ROLE, ERROR_ROLE_REQUIRED, ERROR_USERNAME_MAX_LENGTH, ERROR_USERNAME_MIN_LENGTH, ERROR_USERNAME_REQUIRED, VALID_ROLES } from "../constant";
+import { EMAIL_REGEX, ERROR_EMAIL_INVALID_FORMAT, ERROR_EMAIL_REQUIRED, ERROR_FULLNAME_MAX_LENGTH, ERROR_FULLNAME_MAX_LENGTH_NUMBER, ERROR_FULLNAME_MIN_LENGTH, ERROR_FULLNAME_MIN_LENGTH_NUMBER, ERROR_FULLNAME_REQUIRED, ERROR_INVALID_ROLE, ERROR_ROLE_REQUIRED, ERROR_USERNAME_MAX_LENGTH, ERROR_USERNAME_MAX_LENGTH_NUMBER, ERROR_USERNAME_MIN_LENGTH, ERROR_USERNAME_MIN_LENGTH_NUMBER, ERROR_USERNAME_REQUIRED, VALID_ROLES } from "../constant";
 import { IUpdateUser } from "../types/userManagmentType";
 
 interface ValidationErrors {
@@ -11,18 +11,18 @@ export const validateUpdateUser = (data: IUpdateUser): ValidationErrors => {
     // Username validation
     if (!data.username) {
         errors.username = ERROR_USERNAME_REQUIRED;
-    } else if (data.username.length < 3) {
+    } else if (data.username.length < ERROR_USERNAME_MIN_LENGTH_NUMBER) {
         errors.username = ERROR_USERNAME_MIN_LENGTH
-    } else if (data.username.length > 50) {
+    } else if (data.username.length > ERROR_USERNAME_MAX_LENGTH_NUMBER) {
         errors.username = ERROR_USERNAME_MAX_LENGTH;
     }
 
     // Full name validation
     if (!data.fullName) {
         errors.fullName = ERROR_FULLNAME_REQUIRED;
-    } else if (data.fullName.length < 2) {
+    } else if (data.fullName.length < ERROR_FULLNAME_MIN_LENGTH_NUMBER) {
         errors.fullName = ERROR_FULLNAME_MIN_LENGTH;
-    } else if (data.fullName.length > 50) {
+    } else if (data.fullName.length > ERROR_FULLNAME_MAX_LENGTH_NUMBER) {
         errors.fullName = ERROR_FULLNAME_MAX_LENGTH;
     }
 
