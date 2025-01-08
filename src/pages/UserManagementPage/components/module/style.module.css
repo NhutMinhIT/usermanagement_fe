@@ -1,0 +1,75 @@
+.usermanagement__page {
+    margin-top: 10px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+.search__container {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+}
+
+.btn__container {
+    display: flex;
+    gap: 1rem;
+}
+
+.search__input input {
+    font-size: 1rem;
+    padding: 1rem;
+    width: 20rem;
+
+}
+
+.btn__adduser, .btn__reload {
+    align-items: center;
+    gap: 0.25rem;
+    width: auto;
+}
+
+.button__create__user,
+.button__cancel__create__user,
+.btn__update_user,
+.btn__cancel_update_user {
+    padding: 10px 0px 10px 0px !important;
+}
+
+.form__create__user,
+.form__update__user {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .search__input {
+        max-width: 100%;
+    }
+
+    .search_input input {
+        width: 100%;
+    }
+
+    .search__container {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .btn__adduser, .btn__reload {
+        width: 50%;
+        display: flex;
+        height: 3rem;
+    }
+
+    .btn__reload :nth-child(2), .btn__adduser :nth-child(2) {
+        display: none;
+    }
+
+}
