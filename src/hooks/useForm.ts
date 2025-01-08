@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { VALIDATION_ERROR_LENGHT_DEFAULT } from './types';
 
 export const useForm = <T extends Record<string, any>>(
     initialFormData: T,
@@ -30,7 +31,7 @@ export const useForm = <T extends Record<string, any>>(
         const validationErrors = validateForm(formData);
         setErrors(validationErrors);
 
-        if (Object.keys(validationErrors).length === 0) {
+        if (Object.keys(validationErrors).length === VALIDATION_ERROR_LENGHT_DEFAULT) {
             try {
                 setIsLoading(true);
                 await submitCallback(formData);

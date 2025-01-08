@@ -5,16 +5,17 @@ import { CREATING_USER_ERROR, CREATING_USER_SUCCESS, FETCHING_DATA_ERROR, FETCHI
 import { ICreateUser, IUpdateUser, TGetAllUsersParams } from '../pages/UserManagementPage/types/userManagmentType';
 import { createUser, getAllUsers, getUserById, removeUser, updateUser } from '../pages/UserManagementPage/services/userService';
 import { ISearchParams } from '../pages/UserManagementPage/types/searchType';
+import { DELAY_DEBOUNCE_DEFAULT, LIMIT_NUMBER_DEFAULT, PAGE_NUMBER_DEFAULT, SEARCH_PARAMS_DEFAULT, SELECT_USER_DEFAULT, TOTAL_PAGE_NUMBER_DEFAULT } from './types';
 
 
 export const useUserData = () => {
     const [data, setData] = useState<IUser[]>([]);
-    const [total, setTotal] = useState<number>(0);
+    const [total, setTotal] = useState<number>(TOTAL_PAGE_NUMBER_DEFAULT);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [page, setPage] = useState<number>(1);
-    const [limit, setLimit] = useState<number>(20);
-    const [search, setSearch] = useState<string>("");
-    const [selectedUser, setSelectedUser] = useState<string | null>(null);
+    const [page, setPage] = useState<number>(PAGE_NUMBER_DEFAULT);
+    const [limit, setLimit] = useState<number>(LIMIT_NUMBER_DEFAULT);
+    const [search, setSearch] = useState<string>(SEARCH_PARAMS_DEFAULT);
+    const [selectedUser, setSelectedUser] = useState<string | null>(SELECT_USER_DEFAULT);
     const [isCreateUserDialog, setIsCreateUserDialog] = useState<boolean>(false);
 
     // dialog remove user
@@ -89,8 +90,8 @@ export const useUserData = () => {
 
     const { handleSearchChange } = useSearch<ISearchParams>({
         onSearch: fetchUserData,
-        searchParams: { page: 1, limit: 10 },
-        delay: 500
+        searchParams: { page: PAGE_NUMBER_DEFAULT, limit: LIMIT_NUMBER_DEFAULT },
+        delay: DELAY_DEBOUNCE_DEFAULT
     });
 
     const handleChangePage = (

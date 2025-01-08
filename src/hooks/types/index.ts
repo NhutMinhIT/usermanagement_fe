@@ -1,0 +1,7 @@
+export const VALIDATION_ERROR_LENGHT_DEFAULT = 0;
+export const DELAY_DEBOUNCE_DEFAULT = 300;
+export const PAGE_NUMBER_DEFAULT = 1;
+export const LIMIT_NUMBER_DEFAULT = 10;
+export const TOTAL_PAGE_NUMBER_DEFAULT = 0;
+export const SEARCH_PARAMS_DEFAULT = ''
+export const SELECT_USER_DEFAULT = null;

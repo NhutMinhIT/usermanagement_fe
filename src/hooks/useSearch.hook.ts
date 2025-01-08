@@ -1,13 +1,14 @@
 import { useCallback, useState } from 'react';
 import { IUseSearchProps } from '../pages/UserManagementPage/types/searchType';
 import { useDebounce } from './useDebounce.hook';
+import { DELAY_DEBOUNCE_DEFAULT, SEARCH_PARAMS_DEFAULT } from './types';
 
 export const useSearch = <T extends { search?: string }>({
     onSearch,
-    delay = 300,
+    delay = DELAY_DEBOUNCE_DEFAULT,
     searchParams = {} as Partial<T>
 }: IUseSearchProps<T>) => {
-    const [searchValue, setSearchValue] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<string>(SEARCH_PARAMS_DEFAULT);
 
     const debouncedSearch = useDebounce(
         (value: string): void => {
